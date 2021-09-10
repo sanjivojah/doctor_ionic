@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router, NavigationStart, Event } from '@angular/router';
 @Component({
   selector: 'app-bookingmodal',
   templateUrl: './bookingmodal.page.html',

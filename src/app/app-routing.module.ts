@@ -55,9 +55,10 @@ const routes: Routes = [
   },
   { path: '**', loadChildren: './error/error.module#ErrorPageModule' },
   { 
-    path: 'bookingmodal', 
+    path: 'doctor/bookingmodal', 
     loadChildren: './doctor/bookingmodal/bookingmodal.module#BookingmodalPageModule' 
-  },
+  },  { path: 'booking', loadChildren: './booking/booking.module#BookingPageModule' },
+
 
 
 ];
