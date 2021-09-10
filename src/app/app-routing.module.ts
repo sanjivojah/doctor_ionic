@@ -53,14 +53,38 @@ const routes: Routes = [
     path: 'doctor',
     loadChildren: './doctor/home.module#HomePageModule'
   },
-  { path: '**', loadChildren: './error/error.module#ErrorPageModule' },
+  {
+    path: 'booking',
+    loadChildren: './booking/home.module#HomePageModule'
+  },
+  {
+    path: 'diag',
+    loadChildren: './diag/home.module#HomePageModule'
+  },
+  {
+    path: 'hospital',
+    loadChildren: './hospital/home.module#HomePageModule'
+  },
+  {
+    path: 'clinic',
+    loadChildren: './clinic/home.module#HomePageModule'
+  },
+  {
+    path: 'feedback',
+    loadChildren: './feedback/home.module#HomePageModule'
+  },
+  {
+    path: 'offer',
+    loadChildren: './offer/home.module#HomePageModule'
+  },
+  {
+    path: 'doctorprofile',
+    loadChildren: './doctorprofile/home.module#HomePageModule'
+  },
   { 
-    path: 'doctor/bookingmodal', 
-    loadChildren: './doctor/bookingmodal/bookingmodal.module#BookingmodalPageModule' 
-  },  { path: 'booking', loadChildren: './booking/booking.module#BookingPageModule' },
-
-
-
+    path: '**', 
+    loadChildren: './error/error.module#ErrorPageModule' 
+  },
 ];
 
 @NgModule({
