@@ -7,14 +7,18 @@
     <ion-icon ios="ios-calendar" md="ios-calendar"></ion-icon>
     <span class="text">Schedule</span>
   </button>
-  <div class="special">
+  <!-- <div class="special">
     <button (click)="callSylvie()"></button>
-  </div>
+  </div> -->
   <button (click)="switchTabs('mailbox', 3)" [class.current]="selectedTab === 3">
-    <ion-icon ios="md-mail" md="md-mail"></ion-icon>
-    <span class="text">Mailbox</span>
+    <ion-icon ios="md-paper" md="md-paper"></ion-icon>
+    <span class="text">Feedback</span>
   </button>
-  <button (click)="switchTabs('notifications', 4)" [class.current]="selectedTab === 4">
+  <button (click)="switchTabs('mailbox', 4)" [class.current]="selectedTab === 3">
+    <ion-icon ios="md-pricetags" md="md-pricetags"></ion-icon>
+    <span class="text">Offer</span>
+  </button>
+  <button (click)="switchTabs('notifications', 5)" [class.current]="selectedTab === 4">
     <ion-icon ios="md-notifications-outline" md="md-notifications-outline"></ion-icon>
     <span class="text">Updates</span>
   </button>

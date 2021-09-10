@@ -49,7 +49,17 @@ const routes: Routes = [
     path: 'wallet',
     loadChildren: './wallet/wallet.module#WalletPageModule'
   },
-  { path: '**', loadChildren: './error/error.module#ErrorPageModule' }
+  {
+    path: 'doctor',
+    loadChildren: './doctor/home.module#HomePageModule'
+  },
+  { path: '**', loadChildren: './error/error.module#ErrorPageModule' },
+  { 
+    path: 'bookingmodal', 
+    loadChildren: './doctor/bookingmodal/bookingmodal.module#BookingmodalPageModule' 
+  },
+
+
 ];
 
 @NgModule({

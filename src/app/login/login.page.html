@@ -4,8 +4,7 @@
       <div class="content__centered p-0">
         <div class="login-wrapper">
           <div class="header">
-            <h2>Welcome back</h2>
-            <h6>Sign in to continue</h6>
+            <h2>Sign in to continue</h2>
           </div>
           <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
             <div class="input-row">
@@ -31,14 +30,6 @@
                 [disabled]="!loginForm.valid || formSubmitted">{{loginBtnText}}</button>
             </div>
           </form>
-          <div class="footer">
-            <div class="links">
-              <p>
-                Forget password? <a routerLink="/reset-password" routerDirection="root">Reset</a>
-              </p>
-              <p>Don't have account? <a routerLink="/register" routerDirection="root">Register</a></p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
