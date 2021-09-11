@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from '@ionic/angular';
 import { Router, NavigationEnd } from '@angular/router';
-import { AssistantPage } from '../../assistant/assistant.page';
+// import { AssistantPage } from '../../assistant/assistant.page';
 
 @Component({
   selector: 'footer-tabs',
@@ -48,12 +48,12 @@ export class FooterTabsComponent implements OnInit {
     this.nav.navigateForward(path);
   }
 
-  async callSylvie() {
-    const modal = await this.modal.create({
-      component: AssistantPage,
-      componentProps: { value: this.currentUrl },
-    });
-    return await modal.present();
-  }
+  // async callSylvie() {
+  //   const modal = await this.modal.create({
+  //     component: AssistantPage,
+  //     componentProps: { value: this.currentUrl },
+  //   });
+  //   return await modal.present();
+  // }
 
 }
