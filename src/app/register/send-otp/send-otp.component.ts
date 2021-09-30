@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InteractionService } from './../../_services/interaction.service';
-import { NavController } from '@ionic/angular';
-
+import { ModalController, NavController, ToastController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { finalize } from 'rxjs/operators';
 // import dialCodesJson from '../../../assets/dummy/dialCodes.json';
 
 @Component({
@@ -21,21 +23,21 @@ export class SendOtpComponent implements OnInit {
       dial_code: '+91',
       code: 'IN',
     },
-    {
-      name: 'United Arab Emirates',
-      dial_code: '+971',
-      code: 'AE',
-    },
-    {
-      name: 'United Kingdom',
-      dial_code: '+44',
-      code: 'GB',
-    },
-    {
-      name: 'United States',
-      dial_code: '+1',
-      code: 'US',
-    },
+    // {
+    //   name: 'United Arab Emirates',
+    //   dial_code: '+971',
+    //   code: 'AE',
+    // },
+    // {
+    //   name: 'United Kingdom',
+    //   dial_code: '+44',
+    //   code: 'GB',
+    // },
+    // {
+    //   name: 'United States',
+    //   dial_code: '+1',
+    //   code: 'US',
+    // },
   ];
 
   mobileErrMsg = '';
@@ -45,6 +47,9 @@ export class SendOtpComponent implements OnInit {
     private title: Title,
     private interact: InteractionService,
     private nav: NavController,
+    private http: HttpClient,
+    private zone:NgZone,
+    private toast: ToastController,
     ) {
     this.mobileNoForm = new FormGroup({
       isdCode: new FormControl('', Validators.required),
@@ -66,16 +71,47 @@ export class SendOtpComponent implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.title.setTitle('Step 1 | Doctor Registration');
+    this.title.setTitle('Step 1 | Registration');
   }
 
   async checkMobile() {}
-
+  
+  async presentToast(msg) {
+    const toast = await this.toast.create({
+      message: msg,
+      position: 'bottom',
+      duration: 2000,
+    });
+    toast.present();
+  }
   async onSubmit(e) {
+    //console.log(e.value.mobileNo)
     this.formSubmitted = true;
     this.interact.changeAllowance(true);
     setTimeout(() => {
-      this.nav.navigateForward('/register/associate-email');
-    }, 1500);
+      const formData = new FormData();
+      formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+      formData.append('id', e.value.mobileNo)
+      this.http.post("https://projectnothing.xyz/doctorapp/APIs/registration1.php", formData)
+      .pipe(
+        finalize(() => {
+        })
+      )
+      .subscribe(res => {
+        var json=JSON.parse(JSON.stringify(res))
+        console.log(json)
+        if(json[0].data >0){
+          this.presentToast('Mobile Number Alredy register with us')
+          //this.loginBtnText = 'Sign in';
+          this.formSubmitted = false;
+        }
+        else{
+          localStorage.setItem('mobilenumber', e.value.mobileNo)
+          this.nav.navigateForward('/register/associate-email');
+        }
+    
+      });
+      
+    }, 3000);
   }
 }

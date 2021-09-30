@@ -17,7 +17,7 @@
           <img src="//via.placeholder.com/100" alt="...">
         </div> -->
       <div class="user-info">
-        <h4>User Name
+        <h4>{{username}}
           <span class="verified">
             <ion-icon ios="ios-checkmark-circle" md="ios-checkmark-circle"></ion-icon>
           </span>
@@ -42,7 +42,7 @@
       <div class="overscroll-wrapper">
         <ion-slides class="slides__social" [options]="slideOpts">
           <ion-slide tappable>
-            <div class="card" (click)="goto('social/doctors-network/my-posts')">
+            <div class="card" (click)="goto('/allapointment')">
               <div class="cover dnetwork"></div>
               <div class="title">All Appointments</div>
             </div>

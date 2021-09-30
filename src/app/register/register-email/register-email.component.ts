@@ -14,14 +14,14 @@ export class RegisterEmailComponent implements OnInit {
   loginCredentialForm: FormGroup;
   emailErrMsg = '';
   formSubmitted = false;
-
+  mobilenumber:any
   constructor(
     private title: Title,
     private interact: InteractionService,
     private nav: NavController,
   ) {
     this.loginCredentialForm = new FormGroup({
-      userId: new FormControl('', [Validators.required, Validators.email]),
+      userId: new FormControl(''),
       pw: new FormControl('', [
         Validators.required,
         Validators.pattern(
@@ -34,6 +34,7 @@ export class RegisterEmailComponent implements OnInit {
 
   ngOnInit() {
     this.interact.changeAllowance(false);
+    this.mobilenumber= localStorage.getItem('mobilenumber')
   }
 
   ionViewDidEnter() {
@@ -41,9 +42,11 @@ export class RegisterEmailComponent implements OnInit {
   }
 
   async onSubmit(e) {
+    //console.log(e.value.pw)
     this.formSubmitted = true;
     this.interact.changeAllowance(true);
     setTimeout(() => {
+      localStorage.setItem('password', e.value.pw)
       this.nav.navigateForward('/register/create-profile');
     },         1500);
   }

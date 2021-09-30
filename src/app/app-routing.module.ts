@@ -54,8 +54,26 @@ const routes: Routes = [
     loadChildren: './doctor/home.module#HomePageModule'
   },
   {
-    path: 'booking',
+    path: 'locationresult/:id',
+    loadChildren: './locationresult/home.module#HomePageModule'
+  },
+  
+  {
+    path: 'allapointment',
+    loadChildren: './allapointment/home.module#HomePageModule'
+  },
+  {
+    path: 'booking/:id/:type',
     loadChildren: './booking/home.module#HomePageModule'
+  },
+  {
+    path: 'allprofiles/:id/:type',
+    loadChildren: './allprofiles/home.module#HomePageModule'
+  },
+  
+  {
+    path: 'bill/:userid',
+    loadChildren: './bill/home.module#HomePageModule'
   },
   {
     path: 'diag',
@@ -78,7 +96,7 @@ const routes: Routes = [
     loadChildren: './offer/home.module#HomePageModule'
   },
   {
-    path: 'doctorprofile',
+    path: 'doctorprofile/:id',
     loadChildren: './doctorprofile/home.module#HomePageModule'
   },
   { 

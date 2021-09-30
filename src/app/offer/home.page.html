@@ -24,46 +24,29 @@
       <a (click)="dismissReminder()" class="skip-btn">I'll do that later</a>
     </div>
   </section>
-  <ion-card>
-    <ion-card-header>
-      <ion-grid>
-        <ion-row>
-          <ion-avatar>
+  <div *ngFor='let data of row_data'>
+    <ion-card>
+      <ion-card-header>
+        <ion-grid>
+          <ion-row>
+            <ion-avatar>
+              <ion-col>
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              </ion-col>
+            </ion-avatar>
             <ion-col>
-              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              <ion-card-title>{{data.code}}</ion-card-title>
+              <ion-card-subtitle>{{data.offertitle}}</ion-card-subtitle>
+              <ion-card-subtitle>Applicable only in {{data.type}}</ion-card-subtitle>
             </ion-col>
-          </ion-avatar>
-          <ion-col>
-            <ion-card-title>Offer 1</ion-card-title>
-            <ion-card-subtitle>ENT</ion-card-subtitle>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-button color="success" routerLink="/booking/">Apply</ion-button>
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-header>
-      <ion-grid>
-        <ion-row>
-          <ion-avatar>
-            <ion-col>
-              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-            </ion-col>
-          </ion-avatar>
-          <ion-col>
-            <ion-card-title>Offer 2</ion-card-title>
-            <ion-card-subtitle>Medicine</ion-card-subtitle>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-button color="success">Apply</ion-button>
-    </ion-card-content>
-  </ion-card>
+          </ion-row>
+        </ion-grid>
+      </ion-card-header>
+      <ion-card-content style="text-align: right;">
+        <ion-button color="success" (click)='copyString(data.code)'>Copy to Clipboard</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
 <ion-footer class="flat">
   <footer-tabs>

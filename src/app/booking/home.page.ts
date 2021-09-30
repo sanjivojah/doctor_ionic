@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ModalController, NavController, ToastController } from '@ionic/angular';
-import { Router, NavigationStart, Event } from '@angular/router';
+import { ModalController, NavController, ToastController,AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { Subject } from 'rxjs';
-// import { InfoModalComponent } from '../_components/info-modal/info-modal.component';
 import { SearchComponent } from '../_components/search/search.component';
-import { TopicsComponent } from '../_components/topics/topics.component';
-import { VideoDetailsComponent } from '../videos/video-details/video-details.component';
-
 import { InteractionService } from '../_services/interaction.service';
 import { HomeDataService } from './home-data.service';
+import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
+import { finalize } from 'rxjs/operators';
+declare var RazorpayCheckout: any;
+
 
 @Component({
   selector: 'app-home',
@@ -19,67 +18,32 @@ import { HomeDataService } from './home-data.service';
 })
 export class HomePage implements OnInit {
 
-  greetName: string;
-  token: string;
-
-  allTopics: any[] = [];
-  userTopics: string[] = [];
-  videos: any[] = [];
-  patients: any[] = [];
-  deals: any[] = [];
-
-  dealLoaded = false;
-
+  
+  type:any
+  id:any
+  amount:any
   darkMode: boolean;
   showPrivacyBanner = true;
   showReminder: boolean;
+  offeramount=0
+  totalamount:any
+  row_data=[]
+  celebration=false
+  celbr:any
+  paymentmethod=false
+  bookbutton=true
+  paybutton=false
+  bookingid:any
+  booking_name:any
+  booking_address:any
 
-  private refreshNeeded: Subject<void> = new Subject<void>();
+  paymentAmount: number = 333;
+  currency: string = 'INR';
+  currencyIcon: string = '$';
+  razor_key = 'rzp_test_wXHUa0bd5doUNv';
+  cardDetails: any = {};
 
-  slideOpts = {
-    // grabCursor: true,
-    // slidesPerColumn: 1,
-    // spaceBetween: 30,
-    // freeMode: true,
-    // loop: true,
-    // speed: 600,
-    // parallax: true,
-    autoplay: {
-      delay: 2500,
-      disableOnInteraction: true,
-    },
-  };
-
-  socialSlideOpts = {
-    slidesPerView: 2.2,
-    // slidesPerColumn: 1,
-    // grabCursor: true,
-    freeMode: true,
-  };
-
-  careSlideOpts = {
-    slidesPerView: 3,
-    // slidesPerColumn: 2,
-    // grabCursor: true,
-  };
-
-  orderSlideOpts = {
-    // grabCursor: true,
-  };
-
-  dealsSlideOpts = {};
-
-  patientsSlideOpts = {
-    freeMode: true,
-    slidesPerView: 3,
-  };
-
-  eduVidslideOpts = {
-    // slidesPerView: 1.2,
-    // spaceBetween: 20,
-  };
-
-
+  
   constructor(
     private title: Title,
     private interact: InteractionService,
@@ -89,31 +53,150 @@ export class HomePage implements OnInit {
     private nav: NavController,
     private router: Router,
     private homeData: HomeDataService,
+    private http: HttpClient,
+    private zone:NgZone,
+    private activeRoute: ActivatedRoute,
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
-    this.title.setTitle('Doctor Dashboard');
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationStart) {
-        this.hideModal();
-      }
-    })
+    this.type = this.activeRoute.snapshot.paramMap.get('type')
+    this.id = this.activeRoute.snapshot.paramMap.get('id')
+    
   }
 
   ionViewDidEnter() {
-    this.store.get('DARK_UI').then((mode) => this.darkMode = mode ? true : false);
-    this.store.get('BANN_PRIVACY').then((show) => this.showPrivacyBanner = show !== 'N' ? true : false);
-    // this.refreshNeeded.next();
-    this.loadData();
+    this.type = this.activeRoute.snapshot.paramMap.get('type')
+    this.id = this.activeRoute.snapshot.paramMap.get('id')
+    this.loadData(this.type,this.id);
   }
 
-  loadData() {
-    this.videos = this.homeData.getRandomVideos(4);
-    this.patients = this.homeData.getRandomPatients(6);
-    this.deals = this.homeData.getRandomDeals(7);
-    setTimeout(() => {
-      this.dealLoaded = true;
-    }, 2000);
+  loadData(type,id) {
+    if(type=="doctor"){
+      const formData = new FormData();
+      formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+      formData.append('id', id)
+      this.http.post("https://projectnothing.xyz/doctorapp/APIs/selectdoctor.php", formData)
+      .pipe(
+        finalize(() => {
+        })
+      )
+      .subscribe(res => {
+      
+        this.row_data=[]
+        this.zone.run(() => {
+          var json=JSON.parse(JSON.stringify(res))
+          console.log(json)
+          this.amount=json[0].fee
+          this.booking_name=json[0].name
+          this.booking_address=json[0].address
+          this.calculate(this.offeramount)
+          var slots=json[0].slots
+          var jsonss=slots.split(",");
+          this.bookingid=json[0].id
+          for(var i=0; i<jsonss.length;i++){
+            this.row_data.push({
+              slots:jsonss[i]
+            })
+          }
+        });
+    
+      })
+    }
+    if(type=="hospital"){
+      const formData = new FormData();
+      formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+      formData.append('id', id)
+      this.http.post("https://projectnothing.xyz/doctorapp/APIs/selecthospital.php", formData)
+      .pipe(
+        finalize(() => {
+        })
+      )
+      .subscribe(res => {
+      
+        this.row_data=[]
+        this.zone.run(() => {
+          var json=JSON.parse(JSON.stringify(res))
+          console.log(json)
+          this.amount=json[0].fee
+          this.booking_name=json[0].name
+          this.booking_address=json[0].address
+          this.calculate(this.offeramount)
+          var slots=json[0].slot
+          var jsonss=slots.split(",");
+          this.bookingid=json[0].id
+          for(var i=0; i<jsonss.length;i++){
+            this.row_data.push({
+              slots:jsonss[i]
+            })
+          }
+        });
+    
+      })
+    }
+    if(type=="diag"){
+      const formData = new FormData();
+      formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+      formData.append('id', id)
+      this.http.post("https://projectnothing.xyz/doctorapp/APIs/selectdiag.php", formData)
+      .pipe(
+        finalize(() => {
+        })
+      )
+      .subscribe(res => {
+      
+        this.row_data=[]
+        this.zone.run(() => {
+          var json=JSON.parse(JSON.stringify(res))
+          console.log(json)
+          this.amount=json[0].fee
+          this.booking_name=json[0].name
+          this.booking_address=json[0].address
+          this.calculate(this.offeramount)
+          var slots=json[0].slot
+          var jsonss=slots.split(",");
+          this.bookingid=json[0].id
+          for(var i=0; i<jsonss.length;i++){
+            this.row_data.push({
+              slots:jsonss[i]
+            })
+          }
+        });
+    
+      })
+    }
+    if(type=="clinic"){
+      const formData = new FormData();
+      formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+      formData.append('id', id)
+      this.http.post("https://projectnothing.xyz/doctorapp/APIs/selectclinic.php", formData)
+      .pipe(
+        finalize(() => {
+        })
+      )
+      .subscribe(res => {
+      
+        this.row_data=[]
+        this.zone.run(() => {
+          var json=JSON.parse(JSON.stringify(res))
+          console.log(json)
+          this.amount=json[0].fee
+          this.booking_name=json[0].name
+          this.booking_address=json[0].address
+          this.calculate(this.offeramount)
+          var slots=json[0].slot
+          var jsonss=slots.split(",");
+          this.bookingid=json[0].id
+          for(var i=0; i<jsonss.length;i++){
+            this.row_data.push({
+              slots:jsonss[i]
+            })
+          }
+        });
+    
+      })
+    }
+
   }
 
   async initSearch() {
@@ -137,48 +220,6 @@ export class HomePage implements OnInit {
     }
   }
 
-  hideBanner() {
-    this.showPrivacyBanner = false;
-    this.store.set('BANN_PRIVACY', 'N');
-  }
-
-  navigateTo(e: string) {
-    switch (e) {
-      case 'REF':
-        this.nav.navigateForward('/referrals');
-        break;
-      case 'APPO':
-        this.nav.navigateForward('/schedule');
-        break;
-      case 'EHR':
-        this.nav.navigateForward('/e-health-records');
-        break;
-      case 'VID':
-        this.nav.navigateForward('/videos');
-        break;
-      default:
-        break;
-    }
-  }
-
-  async openTopics() {
-    const modal = await this.modal.create({
-      component: TopicsComponent,
-    });
-    return await modal.present();
-  }
-
-
-  async playVideo(video) {
-    const modal = await this.modal.create({
-      component: VideoDetailsComponent,
-      componentProps: {
-        video
-      },
-    });
-    return await modal.present();
-  }
-
   async presentToast(msg) {
     const toast = await this.toast.create({
       message: msg,
@@ -187,24 +228,238 @@ export class HomePage implements OnInit {
     });
     toast.present();
   }
-
-  async hideModal() {
-    const modal = await this.modal.getTop();
-    if (modal) {
-      modal.dismiss();
+  offer(){
+    var offer = ((document.getElementById("offer") as HTMLInputElement).value);
+    if(offer){
+      const formData = new FormData();
+      formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+      formData.append('type', this.type)
+      formData.append('offer', offer)
+      this.http.post("https://projectnothing.xyz/doctorapp/APIs/applyoffer.php", formData)
+      .pipe(
+        finalize(() => {
+        })
+      )
+      .subscribe(res => {
+       if(res=='NO'){
+        this.presentToast('Invalid Coupon Code')
+       }
+       else{
+        var json=JSON.parse(JSON.stringify(res))
+        var actualamount=Number(this.percentage(Number(json[0].percentage),Number(this.amount)))
+        this.calculate(actualamount)
+        //this.celebration=true
+        //setTimeout(this.stopcelebration, 3000);
+        this.offerdata(offer,actualamount)
+       }
+  
+    
+      })
     }
+    else{
+      this.presentToast('Please enter Coupon Code')
+    }
+
+  }
+  calculate(offeramount){
+    this.zone.run(() => {
+      this.offeramount=offeramount
+    this.totalamount=Number(this.amount)-offeramount
+    })
+  }
+  percentage(percent, total) {
+    return ((percent/ 100) * total).toFixed(2)
+  }
+  stopcelebration(){
+    this.celebration=false
+    this.zone.run(() => {
+    this.celebration=false
+    })
+  }
+  async offerdata(Coupon,amount) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alert',
+      subHeader: Coupon+' Coupon Applied',
+      message: 'You Got '+amount+'Rs OFF',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+  }
+  book(){
+    var name = ((document.getElementById("name") as HTMLInputElement).value);
+    var phone = ((document.getElementById("phone") as HTMLInputElement).value);
+    var address = ((document.getElementById("address") as HTMLInputElement).value);
+    var bloodgroup = ((document.getElementById("bloodgroup") as HTMLInputElement).value);
+    var slot = ((document.getElementById("slot") as HTMLInputElement).value);
+
+    if(!slot){
+      this.presentToast('Please select a desire slot')
+    }
+    else if(!name || !phone || !address || !bloodgroup){
+      this.presentToast('Please fill you details')
+    }
+    else{
+      this.paymentmethod=true
+      this.bookbutton=false
+      this.paybutton=true
+    }
+   
+  }
+  pay(){
+    var mode = ((document.getElementById("mode") as HTMLInputElement).value);
+    if(!mode){
+      this.presentToast('Please select a payment mode')
+    }
+    else if(mode=='online'){
+      this.presentToast('Online Payment Mode Not Available')
+      //this.payWithRazor(this.totalamount) 
+    }
+    else{
+      var userid=localStorage.getItem('username')
+      var name = ((document.getElementById("name") as HTMLInputElement).value);
+      var phone = ((document.getElementById("phone") as HTMLInputElement).value);
+      var address = ((document.getElementById("address") as HTMLInputElement).value);
+      var bloodgroup = ((document.getElementById("bloodgroup") as HTMLInputElement).value);
+      var slot = ((document.getElementById("slot") as HTMLInputElement).value);
+      //var newDate = new Date();
+      var datee = new Date().toLocaleDateString();
+      const formData = new FormData();
+      formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+      formData.append('userid', userid)
+      formData.append('patientname', name)
+      formData.append('patientphone', phone)
+      formData.append('patientaddress', address)
+      formData.append('bloodgroup', bloodgroup)
+      formData.append('slot', slot)
+      formData.append('date', datee)
+      formData.append('bookingtype', this.type)
+      formData.append('bookingid', this.bookingid)
+      formData.append('payemnetmode', 'offline')
+      formData.append('transsactionid', 'N/A')
+      formData.append('totalamout', this.amount)
+      formData.append('offeramount', String(this.offeramount))
+      formData.append('payableamount', this.totalamount)
+      formData.append('booking_name', this.booking_name)
+      formData.append('booking_address', this.booking_address)
+
+
+      this.http.post("https://projectnothing.xyz/doctorapp/APIs/booking.php", formData)
+      .pipe(
+        finalize(() => {
+        })
+      )
+      .subscribe(res => {
+        console.log(res)
+      if(res){
+        console.log('hi')
+          this.router.navigateByUrl('/bill/'+res);
+        //this.popup("Your booking Succesfull")
+      }
+     else{
+        this.popup("something went Wrong")
+      }
+    
+      })
+    }
+
+  }
+  payWithRazor(amount) {
+    var options = {
+      description: 'BOOKING',
+      image: 'https://i.imgur.com/3g7nmJC.png',
+      currency: this.currency,
+      key: this.razor_key,
+      amount: amount,
+      name: 'APP NAME',
+      prefill: {
+        email: 'sanjibanroy53@gmail.com',
+        contact: '8399034149',
+        name: 'Sanjiban'
+      },
+      theme: {
+        color: '#F37254'
+      },
+      modal: {
+        ondismiss: function () {
+          alert('dismissed')
+        }
+      }
+    };
+
+    var successCallback = function (payment_id) {
+      var userid=localStorage.getItem('username')
+      var name = ((document.getElementById("name") as HTMLInputElement).value);
+      var phone = ((document.getElementById("phone") as HTMLInputElement).value);
+      var address = ((document.getElementById("address") as HTMLInputElement).value);
+      var bloodgroup = ((document.getElementById("bloodgroup") as HTMLInputElement).value);
+      var slot = ((document.getElementById("slot") as HTMLInputElement).value);
+      //var newDate = new Date();
+      var datee = new Date().toLocaleDateString();
+      const formData = new FormData();
+      formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+      formData.append('userid', userid)
+      formData.append('patientname', name)
+      formData.append('patientphone', phone)
+      formData.append('patientaddress', address)
+      formData.append('bloodgroup', bloodgroup)
+      formData.append('slot', slot)
+      formData.append('date', datee)
+      formData.append('bookingtype', this.type)
+      formData.append('bookingid', this.bookingid)
+      formData.append('payemnetmode', 'online')
+      formData.append('transsactionid', payment_id)
+      formData.append('totalamout', this.amount)
+      formData.append('offeramount', String(this.offeramount))
+      formData.append('payableamount', this.totalamount)
+      formData.append('booking_name', this.booking_name)
+      formData.append('booking_address', this.booking_address)
+
+      this.http.post("https://projectnothing.xyz/doctorapp/APIs/booking.php", formData)
+      .pipe(
+        finalize(() => {
+        })
+      )
+      .subscribe(res => {
+        console.log(res)
+      if(res){
+        this.router.navigateByUrl('/bill/'+res);
+        //this.popup("Your booking Succesfull")
+      }
+     else{
+        this.popup("something went Wrong")
+      }
+    
+      })
+    };
+
+    var cancelCallback = function (error) {
+      this.popup('Error ' + error.code +' If money debited from account it will be credited with 72 hours')
+     // alert(error.description + ' (Error ' + error.code + ')');
+    };
+
+    RazorpayCheckout.open(options, successCallback, cancelCallback);
   }
 
-  doRefresh(e) {
+  async popup(messgae) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alert',
+      // subHeader: Coupon+' Coupon Applied',
+      message: messgae,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
-  goToProfile() {
-    this.hideBanner();
-    this.nav.navigateForward('/account/my-profile');
-  }
-
-  dismissReminder() {
-    this.showReminder = false;
-  }
+ 
 
 }

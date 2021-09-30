@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ModalController, NavController, ToastController } from '@ionic/angular';
 import { Router, NavigationStart, Event } from '@angular/router';
@@ -8,10 +8,10 @@ import { Subject } from 'rxjs';
 import { SearchComponent } from '../_components/search/search.component';
 import { TopicsComponent } from '../_components/topics/topics.component';
 import { VideoDetailsComponent } from '../videos/video-details/video-details.component';
-
+import { HttpClient } from '@angular/common/http';
 import { InteractionService } from '../_services/interaction.service';
 import { HomeDataService } from './home-data.service';
-
+import { finalize } from 'rxjs/operators';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -27,7 +27,7 @@ export class HomePage implements OnInit {
   videos: any[] = [];
   patients: any[] = [];
   deals: any[] = [];
-
+  row_data=[]
   dealLoaded = false;
 
   darkMode: boolean;
@@ -89,6 +89,8 @@ export class HomePage implements OnInit {
     private nav: NavController,
     private router: Router,
     private homeData: HomeDataService,
+    private http: HttpClient,
+    private zone: NgZone
   ) { }
 
   ngOnInit() {
@@ -98,6 +100,7 @@ export class HomePage implements OnInit {
         this.hideModal();
       }
     })
+   //this.getdata()
   }
 
   ionViewDidEnter() {
@@ -105,6 +108,7 @@ export class HomePage implements OnInit {
     this.store.get('BANN_PRIVACY').then((show) => this.showPrivacyBanner = show !== 'N' ? true : false);
     // this.refreshNeeded.next();
     this.loadData();
+    this.getdata()
   }
 
   loadData() {
@@ -206,5 +210,36 @@ export class HomePage implements OnInit {
   dismissReminder() {
     this.showReminder = false;
   }
-
+  //recentappointment.php
+  getdata(){
+    var userid=localStorage.getItem('username')
+    const formData = new FormData();
+    formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+    formData.append('userid', userid)
+    this.http.post("https://projectnothing.xyz/doctorapp/APIs/recentappointment.php", formData)
+    .pipe(
+      finalize(() => {
+      })
+    )
+    .subscribe(res => {
+      this.row_data=[]
+      this.zone.run(() => {
+        var json=JSON.parse(JSON.stringify(res))
+        for(var i=0; i<json.length;i++){
+          console.log(json[0])
+          this.row_data.push({
+            booking_type: json[i].booking_type,
+            name: json[i].booking_name,
+            date:json[i].date,
+            slot:json[i].slot,
+            id:json[i].id
+          })
+        }
+      });
+  
+    });
+  }
+  selectPatient(id){
+    this.router.navigateByUrl('/bill/'+id);
+  }
 }

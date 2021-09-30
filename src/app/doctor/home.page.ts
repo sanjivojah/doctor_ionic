@@ -1,16 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ModalController, NavController, ToastController } from '@ionic/angular';
 import { Router, NavigationStart, Event } from '@angular/router';
 import { Storage } from '@ionic/storage';
-import { Subject } from 'rxjs';
-// import { InfoModalComponent } from '../_components/info-modal/info-modal.component';
-import { SearchComponent } from '../_components/search/search.component';
-import { TopicsComponent } from '../_components/topics/topics.component';
-import { VideoDetailsComponent } from '../videos/video-details/video-details.component';
-
+import { finalize } from 'rxjs/operators';
 import { InteractionService } from '../_services/interaction.service';
 import { HomeDataService } from './home-data.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -19,66 +15,12 @@ import { HomeDataService } from './home-data.service';
 })
 export class HomePage implements OnInit {
 
-  greetName: string;
-  token: string;
-
-  allTopics: any[] = [];
-  userTopics: string[] = [];
-  videos: any[] = [];
-  patients: any[] = [];
-  deals: any[] = [];
-
-  dealLoaded = false;
-
+ 
   darkMode: boolean;
   showPrivacyBanner = true;
   showReminder: boolean;
 
-  private refreshNeeded: Subject<void> = new Subject<void>();
-
-  slideOpts = {
-    // grabCursor: true,
-    // slidesPerColumn: 1,
-    // spaceBetween: 30,
-    // freeMode: true,
-    // loop: true,
-    // speed: 600,
-    // parallax: true,
-    autoplay: {
-      delay: 2500,
-      disableOnInteraction: true,
-    },
-  };
-
-  socialSlideOpts = {
-    slidesPerView: 2.2,
-    // slidesPerColumn: 1,
-    // grabCursor: true,
-    freeMode: true,
-  };
-
-  careSlideOpts = {
-    slidesPerView: 3,
-    // slidesPerColumn: 2,
-    // grabCursor: true,
-  };
-
-  orderSlideOpts = {
-    // grabCursor: true,
-  };
-
-  dealsSlideOpts = {};
-
-  patientsSlideOpts = {
-    freeMode: true,
-    slidesPerView: 3,
-  };
-
-  eduVidslideOpts = {
-    // slidesPerView: 1.2,
-    // spaceBetween: 20,
-  };
-
+  row_data = []
 
   constructor(
     private title: Title,
@@ -89,13 +31,16 @@ export class HomePage implements OnInit {
     private nav: NavController,
     private router: Router,
     private homeData: HomeDataService,
+    private http: HttpClient,
+    private zone:NgZone
   ) { }
 
   ngOnInit() {
+    this.getdata()
     this.title.setTitle('Doctor Dashboard');
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
-        this.hideModal();
+       //this.hideModal();
       }
     })
   }
@@ -103,25 +48,40 @@ export class HomePage implements OnInit {
   ionViewDidEnter() {
     this.store.get('DARK_UI').then((mode) => this.darkMode = mode ? true : false);
     this.store.get('BANN_PRIVACY').then((show) => this.showPrivacyBanner = show !== 'N' ? true : false);
-    // this.refreshNeeded.next();
-    this.loadData();
   }
 
-  loadData() {
-    this.videos = this.homeData.getRandomVideos(4);
-    this.patients = this.homeData.getRandomPatients(6);
-    this.deals = this.homeData.getRandomDeals(7);
-    setTimeout(() => {
-      this.dealLoaded = true;
-    }, 2000);
-  }
 
-  async initSearch() {
-    const modal = await this.modal.create({
-      component: SearchComponent,
+  getdata(){
+    const formData = new FormData();
+    formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+    this.http.post("https://projectnothing.xyz/doctorapp/APIs/alldoctor.php", formData)
+    .pipe(
+      finalize(() => {
+      })
+    )
+    .subscribe(res => {
+      this.row_data=[]
+      this.zone.run(() => {
+        var json=JSON.parse(JSON.stringify(res))
+        for(var i=0; i<json.length;i++){
+          //console.log(json[0])
+          this.row_data.push({
+            name: json[i].name,
+            category:json[i].category,
+            address:json[i].address,
+            rating:json[i].rating,
+            sex:json[i].sex,
+            count:Number(json[i].maxlimit),
+            status:json[i].status,
+            id:json[i].id
+          })
+        }
+      });
+  
     });
-    return await modal.present();
   }
+
+ 
 
   changeUIMode(e) {
     if (e.detail.checked) {
@@ -142,43 +102,9 @@ export class HomePage implements OnInit {
     this.store.set('BANN_PRIVACY', 'N');
   }
 
-  navigateTo(e: string) {
-    switch (e) {
-      case 'REF':
-        this.nav.navigateForward('/referrals');
-        break;
-      case 'APPO':
-        this.nav.navigateForward('/schedule');
-        break;
-      case 'EHR':
-        this.nav.navigateForward('/e-health-records');
-        break;
-      case 'VID':
-        this.nav.navigateForward('/videos');
-        break;
-      default:
-        break;
-    }
-  }
+  
 
-  async openTopics() {
-    const modal = await this.modal.create({
-      component: TopicsComponent,
-    });
-    return await modal.present();
-  }
-
-
-  async playVideo(video) {
-    const modal = await this.modal.create({
-      component: VideoDetailsComponent,
-      componentProps: {
-        video
-      },
-    });
-    return await modal.present();
-  }
-
+  
   async presentToast(msg) {
     const toast = await this.toast.create({
       message: msg,
@@ -188,12 +114,6 @@ export class HomePage implements OnInit {
     toast.present();
   }
 
-  async hideModal() {
-    const modal = await this.modal.getTop();
-    if (modal) {
-      modal.dismiss();
-    }
-  }
 
   doRefresh(e) {
   }
@@ -202,9 +122,14 @@ export class HomePage implements OnInit {
     this.hideBanner();
     this.nav.navigateForward('/account/my-profile');
   }
-
-  dismissReminder() {
-    this.showReminder = false;
+  view_full(id){
+    //alert(id)
+    this.router.navigateByUrl('/doctorprofile/'+id);
+    //"/doctorprofile/
   }
+
+  // dismissReminder() {
+  //   this.showReminder = false;
+  // }
 
 }

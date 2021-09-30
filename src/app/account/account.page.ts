@@ -17,6 +17,7 @@ export class AccountPage implements OnInit {
   appName = SETTINGS.app.name;
   version = SETTINGS.app.version;
   darkMode: boolean;
+  username:any
 
   constructor(
     private title: Title,
@@ -31,6 +32,7 @@ export class AccountPage implements OnInit {
   ngOnInit() {
     this.title.setTitle('My Account');
     this.store.get('DARK_UI').then((mode) => this.darkMode = mode ? true : false)
+    this.username=localStorage.getItem('name')
   }
 
   goBack() {

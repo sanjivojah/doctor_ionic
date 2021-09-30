@@ -131,18 +131,22 @@
     <section>
       <ion-label class="section__title" slot="start">
         Recent Appointments
-        <ion-text class="more-link" text-right routerLink="/schedule" routerDirection="forward">See All
+        <ion-text class="more-link" text-right routerLink="/allapointment" routerDirection="forward">See All
         </ion-text>
       </ion-label>
       <div class="overscroll-wrapper">
         <ion-slides class="slides__dashboard contact-list" [options]="patientsSlideOpts">
-          <ion-slide tappable (click)="selectPatient(item)" *ngFor="let item of patients">
+          <ion-slide tappable *ngFor="let item of row_data" (click)="selectPatient(item.id)" >
             <div class="contact">
               <div class="avatar">
                 <img [src]="item.picture" alt="...">
               </div>
-              <div class="name">{{item.name.first}} {{item.name.last}}</div>
-              <span class="age">({{item.age}})</span>
+              <div class="name" *ngIf="item.booking_type=='doctor'">Doctor</div>
+              <div class="name" *ngIf="item.booking_type=='diag'">Diagonistic</div>
+              <div class="name" *ngIf="item.booking_type=='clinic'">Clinic</div>
+              <div class="name" *ngIf="item.booking_type=='hospital'">Hospital</div>
+              <div class="name">{{item.name}}</div>
+              <span class="age">{{item.date}}, {{item.slot}}</span>
             </div>
           </ion-slide>
         </ion-slides>

@@ -17,26 +17,26 @@
     <form>
       <ion-item lines="full">
         <ion-label position="floating">Name</ion-label>
-        <ion-input type="text" required></ion-input>
+        <ion-input type="text" required id="name"></ion-input>
       </ion-item>
   
       <ion-item lines="full">
         <ion-label position="floating">Phone</ion-label>
-        <ion-input type="text" required></ion-input>
+        <ion-input type="text" required  id="phone"></ion-input>
       </ion-item>
   
       <ion-item lines="full">
         <ion-label position="floating">Email</ion-label>
-        <ion-input type="text" required></ion-input>
+        <ion-input type="text" required id="email"></ion-input>
       </ion-item>
   
       <ion-item lines="full">
         <ion-label position="floating">Remark</ion-label>
-        <ion-input type="text" required></ion-input>
+        <ion-input type="text" required id="remark"></ion-input>
       </ion-item>
 
        <!-- Radio buttons -->
-       <ion-radio-group lines="full">
+       <ion-radio-group lines="full" id="callback">
         <ion-list-header>
           <ion-label>Need a callback</ion-label>
         </ion-list-header>
@@ -48,7 +48,7 @@
   
         <ion-item>
           <ion-label>No</ion-label>
-          <ion-radio slot="start" value="no"></ion-radio>
+          <ion-radio slot="start" value="no" ></ion-radio>
         </ion-item>
       </ion-radio-group>
   
@@ -77,7 +77,7 @@
 
       <ion-row>
         <ion-col>
-          <ion-button type="submit" color="primary" expand="block">Submit</ion-button>
+          <ion-button type="submit" color="primary" expand="block" (click)="loadData()">Submit</ion-button>
         </ion-col>
       </ion-row>
     </form>

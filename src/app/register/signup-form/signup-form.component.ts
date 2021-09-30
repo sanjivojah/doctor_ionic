@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { AlertController, NavController } from '@ionic/angular';
+import { ModalController, NavController, ToastController,AlertController } from '@ionic/angular';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InteractionService } from './../../_services/interaction.service';
-
+import { HttpClient } from '@angular/common/http';
+import { finalize } from 'rxjs/operators';
 @Component({
   selector: 'app-signup-form',
   templateUrl: './signup-form.component.html',
@@ -23,10 +24,15 @@ export class SignupFormComponent implements OnInit {
     private alert: AlertController,
     private nav: NavController,
     private interact: InteractionService,
+    private zone:NgZone,
+    private http: HttpClient,
+    private toast: ToastController,
   ) {
     this.signupForm = new FormGroup({
       name: new FormControl('', Validators.required),
-      bname: new FormControl(),
+      address: new FormControl('', Validators.required),
+      age: new FormControl('', Validators.required),
+      email:new FormControl('', [Validators.required,Validators.email ]),
     });
   }
 
@@ -59,15 +65,60 @@ export class SignupFormComponent implements OnInit {
   //   await alert.present();
   //   return await alert.onDidDismiss().then(res => res.role === 'proceed');
   // }
-
+  async presentToast(msg) {
+    const toast = await this.toast.create({
+      message: msg,
+      position: 'bottom',
+      duration: 2000,
+    });
+    toast.present();
+  }
   async onSubmit(e) {
+    console.log(e.value)
+    var mobilenumber= localStorage.getItem('mobilenumber')
+    var password= localStorage.getItem('password')
     this.formSubmitted = true;
-    this.interact.changeAllowance(false);
-    if (!this.signupForm.get('bname').value) {
-      this.signupForm.get('bname').setValue(this.signupForm.get('name').value);
-    }
+    this.interact.changeAllowance(true);
     setTimeout(() => {
-      this.nav.navigateForward('/home');
-    }, 2500);
+      const formData = new FormData();
+      formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+      formData.append('phone', mobilenumber)
+      formData.append('name', e.value.name)
+      formData.append('email', e.value.email)
+      formData.append('password', password)
+      formData.append('address', e.value.address)
+      formData.append('age', e.value.age)
+      this.http.post("https://projectnothing.xyz/doctorapp/APIs/registration2.php", formData)
+      .pipe(
+        finalize(() => {
+        })
+      )
+      .subscribe(res => {
+        if(res){
+          localStorage.setItem('mobilenumber', '')
+          localStorage.setItem('password', '')
+          localStorage.setItem('username', mobilenumber)
+          localStorage.setItem('name', e.value.name)
+          this.nav.navigateForward('/home');
+        }
+        else{
+          this.presentToast('Mobile Number Alredy register with us')
+          this.formSubmitted = false;
+         
+        }
+    
+      });
+      
+    }, 3000);
+
+
+    // this.formSubmitted = true;
+    // this.interact.changeAllowance(false);
+    // if (!this.signupForm.get('bname').value) {
+    //   this.signupForm.get('bname').setValue(this.signupForm.get('name').value);
+    // }
+    // setTimeout(() => {
+    //  // this.nav.navigateForward('/home');
+    // }, 2500);
   }
 }

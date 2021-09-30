@@ -8,8 +8,8 @@
       <div class="input-row anim">
         <mat-form-field appearance="outline" class="d-block">
           <mat-label class="cff">User Id</mat-label>
-          <input matInput placeholder="Your Email Address" type="text" class="cff" autocomplete="off"
-            formControlName="userId">
+          <input matInput value="{{mobilenumber}}" type="text" class="cff" autocomplete="off"
+            formControlName="userId" disabled>
           <mat-hint class="cff">{{emailErrMsg}}</mat-hint>
         </mat-form-field>
       </div>

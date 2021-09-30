@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ModalController, NavController, ToastController } from '@ionic/angular';
 import { Router, NavigationStart, Event } from '@angular/router';
@@ -11,6 +11,8 @@ import { VideoDetailsComponent } from '../videos/video-details/video-details.com
 
 import { InteractionService } from '../_services/interaction.service';
 import { HomeDataService } from './home-data.service';
+import { HttpClient } from '@angular/common/http';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -19,66 +21,13 @@ import { HomeDataService } from './home-data.service';
 })
 export class HomePage implements OnInit {
 
-  greetName: string;
-  token: string;
 
-  allTopics: any[] = [];
-  userTopics: string[] = [];
-  videos: any[] = [];
-  patients: any[] = [];
-  deals: any[] = [];
-
-  dealLoaded = false;
 
   darkMode: boolean;
   showPrivacyBanner = true;
   showReminder: boolean;
 
-  private refreshNeeded: Subject<void> = new Subject<void>();
-
-  slideOpts = {
-    // grabCursor: true,
-    // slidesPerColumn: 1,
-    // spaceBetween: 30,
-    // freeMode: true,
-    // loop: true,
-    // speed: 600,
-    // parallax: true,
-    autoplay: {
-      delay: 2500,
-      disableOnInteraction: true,
-    },
-  };
-
-  socialSlideOpts = {
-    slidesPerView: 2.2,
-    // slidesPerColumn: 1,
-    // grabCursor: true,
-    freeMode: true,
-  };
-
-  careSlideOpts = {
-    slidesPerView: 3,
-    // slidesPerColumn: 2,
-    // grabCursor: true,
-  };
-
-  orderSlideOpts = {
-    // grabCursor: true,
-  };
-
-  dealsSlideOpts = {};
-
-  patientsSlideOpts = {
-    freeMode: true,
-    slidesPerView: 3,
-  };
-
-  eduVidslideOpts = {
-    // slidesPerView: 1.2,
-    // spaceBetween: 20,
-  };
-
+ 
 
   constructor(
     private title: Title,
@@ -89,39 +38,60 @@ export class HomePage implements OnInit {
     private nav: NavController,
     private router: Router,
     private homeData: HomeDataService,
+    private http: HttpClient,
+    private zone:NgZone,
   ) { }
 
   ngOnInit() {
     this.title.setTitle('Doctor Dashboard');
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationStart) {
-        this.hideModal();
-      }
-    })
   }
 
   ionViewDidEnter() {
     this.store.get('DARK_UI').then((mode) => this.darkMode = mode ? true : false);
     this.store.get('BANN_PRIVACY').then((show) => this.showPrivacyBanner = show !== 'N' ? true : false);
     // this.refreshNeeded.next();
-    this.loadData();
+    //this.loadData();
   }
 
   loadData() {
-    this.videos = this.homeData.getRandomVideos(4);
-    this.patients = this.homeData.getRandomPatients(6);
-    this.deals = this.homeData.getRandomDeals(7);
-    setTimeout(() => {
-      this.dealLoaded = true;
-    }, 2000);
+    const formData = new FormData();
+    formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+    var name = ((document.getElementById("name") as HTMLInputElement).value);
+    var phone = ((document.getElementById("phone") as HTMLInputElement).value);
+    var email = ((document.getElementById("email") as HTMLInputElement).value);
+    var remark = ((document.getElementById("remark") as HTMLInputElement).value);
+    var userid=localStorage.getItem('username')
+    var callback = ((document.getElementById("callback") as HTMLInputElement).value);
+    if(!name || !phone || !email || !remark || !callback){
+      this.presentToast('Some Field are missing')
+    }
+    else{
+    formData.append('name', name)
+    formData.append('phone', phone)
+    formData.append('email', email)
+    formData.append('remark', remark)
+    formData.append('userid',userid)
+    formData.append('callback',callback)
+
+    this.http.post("https://projectnothing.xyz/doctorapp/APIs/feedback.php", formData)
+    .pipe(
+      finalize(() => {
+      })
+    )
+    .subscribe(res => {
+      if(res=='yes'){
+          this.presentToast('Feedback submitted We will get back to you soon')
+     
+      }
+      else{
+        this.presentToast('Something went wrong')
+      }
+    });
+    }
+    
   }
 
-  async initSearch() {
-    const modal = await this.modal.create({
-      component: SearchComponent,
-    });
-    return await modal.present();
-  }
+  
 
   changeUIMode(e) {
     if (e.detail.checked) {
@@ -141,44 +111,6 @@ export class HomePage implements OnInit {
     this.showPrivacyBanner = false;
     this.store.set('BANN_PRIVACY', 'N');
   }
-
-  navigateTo(e: string) {
-    switch (e) {
-      case 'REF':
-        this.nav.navigateForward('/referrals');
-        break;
-      case 'APPO':
-        this.nav.navigateForward('/schedule');
-        break;
-      case 'EHR':
-        this.nav.navigateForward('/e-health-records');
-        break;
-      case 'VID':
-        this.nav.navigateForward('/videos');
-        break;
-      default:
-        break;
-    }
-  }
-
-  async openTopics() {
-    const modal = await this.modal.create({
-      component: TopicsComponent,
-    });
-    return await modal.present();
-  }
-
-
-  async playVideo(video) {
-    const modal = await this.modal.create({
-      component: VideoDetailsComponent,
-      componentProps: {
-        video
-      },
-    });
-    return await modal.present();
-  }
-
   async presentToast(msg) {
     const toast = await this.toast.create({
       message: msg,
@@ -187,16 +119,7 @@ export class HomePage implements OnInit {
     });
     toast.present();
   }
-
-  async hideModal() {
-    const modal = await this.modal.getTop();
-    if (modal) {
-      modal.dismiss();
-    }
-  }
-
-  doRefresh(e) {
-  }
+  
 
   goToProfile() {
     this.hideBanner();

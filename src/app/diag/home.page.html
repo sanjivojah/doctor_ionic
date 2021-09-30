@@ -14,46 +14,35 @@
       <a (click)="dismissReminder()" class="skip-btn">I'll do that later</a>
     </div>
   </section>
-  <ion-card>
-    <ion-card-header>
-      <ion-grid>
-        <ion-row>
-          <ion-avatar>
+  <div *ngFor='let data of row_data'>
+    <ion-card>
+      <ion-card-header>
+        <ion-grid>
+          <ion-row>
+            <ion-avatar>
+              <ion-col>
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              </ion-col>
+            </ion-avatar>
             <ion-col>
-              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              <ion-card-title>{{data.name}}</ion-card-title>
+              <ion-card-subtitle class="classgap">{{data.category}}</ion-card-subtitle>
+              <ion-card-subtitle class="classgap">{{data.rating}} <ion-icon name="star-half"></ion-icon></ion-card-subtitle>
+              <ion-card-subtitle class="classgap">{{data.address}}</ion-card-subtitle>
             </ion-col>
-          </ion-avatar>
-          <ion-col>
-            <ion-card-title>Diagonistic Centre 1</ion-card-title>
-            <ion-card-subtitle>Six Mile, Guwahati</ion-card-subtitle>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-button color="success" routerLink="/booking/">Book Appointment</ion-button>
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-header>
-      <ion-grid>
-        <ion-row>
-          <ion-avatar>
-            <ion-col>
-              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-            </ion-col>
-          </ion-avatar>
-          <ion-col>
-            <ion-card-title>Diagonistic Centre 2</ion-card-title>
-            <ion-card-subtitle>Bhangaghar, Guwahati</ion-card-subtitle>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-button color="success" routerLink="/booking/">Book Appointment</ion-button>
-    </ion-card-content>
-  </ion-card>
+          </ion-row>
+        </ion-grid>
+      </ion-card-header>
+      <ion-card-content style="text-align: right;">
+        <div *ngIf='data.count==0 || data.status=="no"'>
+          <ion-button color="danger">Booked</ion-button>
+        </div>
+        <div *ngIf='data.count!=0 || data.status!="no"'>
+          <ion-button color="success" (click)='view_full(data.id)'>Available</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
 <ion-footer class="flat">
   <footer-tabs>

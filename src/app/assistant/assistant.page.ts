@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router, NavigationStart, Event } from '@angular/router';
 @Component({
   selector: 'app-assistant',
   templateUrl: './assistant.page.html',
@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssistantPage implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
+  }
+  goto(id){
+    this.router.navigateByUrl('/locationresult/'+id);
   }
 
 }

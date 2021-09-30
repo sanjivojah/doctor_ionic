@@ -26,7 +26,7 @@
             type="text"
             class="cff"
             autocomplete="off"
-            formControlName="bname"
+            formControlName="address"
           />
           <!-- <mat-error *ngIf="userId.invalid">{{getErrorMessage('id')}}</mat-error> -->
         </mat-form-field>
@@ -36,10 +36,22 @@
           <mat-label class="cff">Age</mat-label>
           <input
             matInput
-            type="text"
+            type="number"
             class="cff"
             autocomplete="off"
-            formControlName="bname"
+            formControlName="age"
+          />
+        </mat-form-field>
+      </div>
+      <div class="input-row anim">
+        <mat-form-field appearance="outline" class="d-block">
+          <mat-label class="cff">Email</mat-label>
+          <input
+            matInput
+            type="email"
+            class="cff"
+            autocomplete="off"
+            formControlName="email"
           />
         </mat-form-field>
       </div>
