@@ -21,7 +21,7 @@ export class RegisterEmailComponent implements OnInit {
     private nav: NavController,
   ) {
     this.loginCredentialForm = new FormGroup({
-      userId: new FormControl(''),
+      // userId: new FormControl(''),
       pw: new FormControl('', [
         Validators.required,
         Validators.pattern(
