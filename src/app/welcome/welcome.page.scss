@@ -100,29 +100,20 @@
 
         &.btn-outline {
             background-color: #fff;
-            border-color: var(--ion-color-primary);
+            border-color: rgb(255, 123, 0);
             padding: 16px 0;
         }
 
         &.btn-fill {
             color: #fff;
             border-radius: 6px;
-            background: linear-gradient(to bottom, var(--ion-color-primary), var(--ion-color-primary-shade));
+            background: linear-gradient(to bottom, var(--ion-color-success), var(--ion-color-primary-shade));
 
             &:hover {
-                background: linear-gradient(to bottom, var(--ion-color-primary-shade), var(--ion-color-primary-shade));
+                background: linear-gradient(to bottom, var(--ion-color-success-shade), var(--ion-color-primary-shade));
             }
         }
-
-        &.fb {
-            background-color: #385998;
-            border-color: #385998;
-
-            &:hover {
-                background-color: darken(#385998, 5%);
-            }
-        }
-    }
+   }
 }
 
 

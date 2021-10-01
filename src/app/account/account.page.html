@@ -1,11 +1,11 @@
 <ion-header class="flat">
-  <ion-toolbar class="colored">
+  <ion-toolbar class="colore">
     <ion-buttons slot="start">
-      <ion-button color="light" (click)="goBack()">
+      <ion-button color="dark" (click)="goBack()">
         <ion-icon ios="md-arrow-back" md="md-arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title color="light" text-center>My Account</ion-title>
+    <ion-title color="dark" text-center>My Account</ion-title>
     <ion-buttons slot="end">
     </ion-buttons>
   </ion-toolbar>
@@ -17,11 +17,12 @@
           <img src="//via.placeholder.com/100" alt="...">
         </div> -->
       <div class="user-info">
-        <h4>{{username}}
-          <span class="verified">
+        <h4>Welcome,</h4>
+        <h5>{{username}}
+          <!-- <span class="verified">
             <ion-icon ios="ios-checkmark-circle" md="ios-checkmark-circle"></ion-icon>
-          </span>
-        </h4>
+          </span> -->
+        </h5>
       </div>
     </div>
     <ion-list class="list-wrapper main-list">
@@ -58,10 +59,6 @@
         <ion-item lines="inset">
           <ion-label>Dark Mode</ion-label>
           <ion-toggle slot="end" (ionChange)="changeUIMode($event)" [checked]="darkMode"></ion-toggle>
-        </ion-item>
-        <ion-item lines="inset">
-          <ion-label>Do not disturb</ion-label>
-          <ion-toggle slot="end"></ion-toggle>
         </ion-item>
         <ion-item lines="inset" class="clickable" (click)="logout()">
           <ion-label class="logout">Log Out</ion-label>

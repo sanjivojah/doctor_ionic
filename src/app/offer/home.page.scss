@@ -70,30 +70,30 @@
       width: 100%;
       border: none;
 
-      .cover {
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        height: 130px;
-        border-radius: 3px 3px 0 0;
-        margin: 0px;
+      // .cover {
+      //   background-position: center;
+      //   background-size: cover;
+      //   background-repeat: no-repeat;
+      //   height: 130px;
+      //   border-radius: 3px 3px 0 0;
+      //   margin: 0px;
 
-        &.diag {
-          background-image: url('../../assets/images/dashboard/diag.jpg')
-        }
+      //   &.diag {
+      //     background-image: url('https://projectnothing.xyz/doctorapp/app/images/home/diag.jpg')
+      //   }
 
-        &.hospital {
-          background-image: url('../../assets/images/dashboard/hospital.jpg')
-        }
+      //   &.hospital {
+      //     background-image: url('../../assets/images/dashboard/hospital.jpg')
+      //   }
 
-        &.carecord {
-          background-image: url('../../assets/images/dashboard/care-cordination.jpg')
-        }
+      //   &.carecord {
+      //     background-image: url('https://projectnothing.xyz/doctorapp/app/images/home/doctor_appointment.jpg')
+      //   }
 
-        &.clinic {
-          background-image: url('../../assets/images/dashboard/clinic.png')
-        }
-      }
+      //   &.clinic {
+      //     background-image: url('../../assets/images/dashboard/clinic.png')
+      //   }
+      // }
 
       .title {
         text-align: center;

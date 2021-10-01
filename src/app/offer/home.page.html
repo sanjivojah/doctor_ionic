@@ -1,16 +1,11 @@
 <ion-header class="flat">
-  <ion-toolbar class="colored">
+  <ion-toolbar class="colore">
     <ion-buttons slot="start">
-      <ion-button color="light" routerDirection="forward" routerLink="/account">
+      <ion-button color="dark" routerDirection="forward" routerLink="/account">
         <ion-icon ios="md-contact" md="md-contact"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title color="light" text-center>Offer</ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="light" (click)="initSearch()">
-        <ion-icon ios="ios-search" md="ios-search"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title color="dark" text-center>Offer</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -31,7 +26,7 @@
           <ion-row>
             <ion-avatar>
               <ion-col>
-                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+                <img src="https://us.123rf.com/450wm/sukanda26/sukanda261602/sukanda26160200201/52262408-grunge-rubber-stamp-with-text-special-offer.jpg?ver=6">
               </ion-col>
             </ion-avatar>
             <ion-col>
@@ -43,7 +38,7 @@
         </ion-grid>
       </ion-card-header>
       <ion-card-content style="text-align: right;">
-        <ion-button color="success" (click)='copyString(data.code)'>Copy to Clipboard</ion-button>
+        <ion-button color="success" (click)='copyString(data.code)'>Copy</ion-button>
       </ion-card-content>
     </ion-card>
   </div>

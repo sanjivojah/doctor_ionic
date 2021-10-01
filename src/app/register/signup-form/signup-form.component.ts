@@ -74,7 +74,7 @@ export class SignupFormComponent implements OnInit {
     toast.present();
   }
   async onSubmit(e) {
-    console.log(e.value)
+    //console.log(e.value)
     var mobilenumber= localStorage.getItem('mobilenumber')
     var password= localStorage.getItem('password')
     this.formSubmitted = true;

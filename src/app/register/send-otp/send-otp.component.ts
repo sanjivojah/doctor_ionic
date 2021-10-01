@@ -23,21 +23,6 @@ export class SendOtpComponent implements OnInit {
       dial_code: '+91',
       code: 'IN',
     },
-    // {
-    //   name: 'United Arab Emirates',
-    //   dial_code: '+971',
-    //   code: 'AE',
-    // },
-    // {
-    //   name: 'United Kingdom',
-    //   dial_code: '+44',
-    //   code: 'GB',
-    // },
-    // {
-    //   name: 'United States',
-    //   dial_code: '+1',
-    //   code: 'US',
-    // },
   ];
 
   mobileErrMsg = '';

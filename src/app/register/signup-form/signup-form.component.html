@@ -2,12 +2,12 @@
   <div class="login-wrapper">
     <div class="header">
       <h2>Create Profile</h2>
-      <h6 class="anim">Please fill up the details.</h6>
+      <h6 class="anim">Please enter your details.</h6>
     </div>
     <form [formGroup]="signupForm" novalidate (ngSubmit)="onSubmit(signupForm)">
       <div class="input-row anim">
         <mat-form-field appearance="outline" class="d-block">
-          <mat-label class="cff">Full Name</mat-label>
+          <mat-label class="cff">Name</mat-label>
           <input
             matInput
             type="text"

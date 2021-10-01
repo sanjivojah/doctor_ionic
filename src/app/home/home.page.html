@@ -1,16 +1,11 @@
 <ion-header class="flat">
-  <ion-toolbar class="colored">
+  <ion-toolbar class="colore">
     <ion-buttons slot="start">
-      <ion-button color="light" routerDirection="forward" routerLink="/account">
+      <ion-button color="dark" routerDirection="forward" routerLink="/account">
         <ion-icon ios="md-contact" md="md-contact"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title color="light" text-center>Home</ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="light" (click)="initSearch()">
-        <ion-icon ios="ios-search" md="ios-search"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title color="dark" text-center>Home</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -25,34 +20,31 @@
     </div>
   </section>
   <section>
-    <!-- <ion-label class="section__title" slot="start">
-        Advanced Services
-      </ion-label> -->
     <ion-slides class="slides__dashboard featured mt-0 full-width" [options]="slideOpts" pager="true">
       <ion-slide>
         <div class="slides__featured">
-          <div class="banner" style="background-image: url('assets/images/genomics.png')">
+          <div class="banner" style="background-image: url('https://projectnothing.xyz/doctorapp/app/images/home/1_banner.jpg')">
             <div class="main-text"></div>
           </div>
         </div>
       </ion-slide>
       <ion-slide>
         <div class="slides__featured">
-          <div class="banner" style="background-image: url('assets/images/dermatoscopy.jpg')">
+          <div class="banner" style="background-image: url('https://projectnothing.xyz/doctorapp/app/images/home/2_banner.jpg')">
             <div class="main-text"></div>
           </div>
         </div>
       </ion-slide>
       <ion-slide>
         <div class="slides__featured">
-          <div class="banner" style="background-image: url('assets/images/tourism.jpg')">
+          <div class="banner" style="background-image: url('https://projectnothing.xyz/doctorapp/app/images/home/3_banner.jpg')">
             <div class="main-text"></div>
           </div>
         </div>
       </ion-slide>
       <ion-slide>
         <div class="slides__featured">
-          <div class="banner" style="background-image: url('assets/images/blogs.jpg')">
+          <div class="banner" style="background-image: url('https://projectnothing.xyz/doctorapp/app/images/home/4_banner.jpg')">
             <div class="main-text"></div>
           </div>
         </div>
@@ -101,7 +93,7 @@
     <div class="overscroll-wrapper">
       <ion-slides class="slides__dashboard patient-care" [options]="careSlideOpts">
         <ion-slide tappable>
-          <div class="card" routerLink="/schedule" routerDirection="forward">
+          <div class="card" routerLink="/allapointment" routerDirection="forward">
             <div class="cover c-appoint"></div>
             <div class="title">Appointment</div>
           </div>
