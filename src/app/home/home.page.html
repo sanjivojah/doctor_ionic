@@ -23,28 +23,28 @@
     <ion-slides class="slides__dashboard featured mt-0 full-width" [options]="slideOpts" pager="true">
       <ion-slide>
         <div class="slides__featured">
-          <div class="banner" style="background-image: url('https://projectnothing.xyz/doctorapp/app/images/home/1_banner.jpg')">
+          <div class="banner" style="background-image: url('https://cureplus.online/app/images/home/1_banner.jpg')">
             <div class="main-text"></div>
           </div>
         </div>
       </ion-slide>
       <ion-slide>
         <div class="slides__featured">
-          <div class="banner" style="background-image: url('https://projectnothing.xyz/doctorapp/app/images/home/2_banner.jpg')">
+          <div class="banner" style="background-image: url('https://cureplus.online/app/images/home/2_banner.jpg')">
             <div class="main-text"></div>
           </div>
         </div>
       </ion-slide>
       <ion-slide>
         <div class="slides__featured">
-          <div class="banner" style="background-image: url('https://projectnothing.xyz/doctorapp/app/images/home/3_banner.jpg')">
+          <div class="banner" style="background-image: url('https://cureplus.online/app/images/home/3_banner.jpg')">
             <div class="main-text"></div>
           </div>
         </div>
       </ion-slide>
       <ion-slide>
         <div class="slides__featured">
-          <div class="banner" style="background-image: url('https://projectnothing.xyz/doctorapp/app/images/home/4_banner.jpg')">
+          <div class="banner" style="background-image: url('https://cureplus.online/app/images/home/4_banner.jpg')">
             <div class="main-text"></div>
           </div>
         </div>
@@ -131,7 +131,7 @@
           <ion-slide tappable *ngFor="let item of row_data" (click)="selectPatient(item.id)" >
             <div class="contact">
               <div class="avatar">
-                <img [src]="item.picture" alt="...">
+                <img src="assets/images/appointment.png" alt="...">
               </div>
               <div class="name" *ngIf="item.booking_type=='doctor'">Doctor</div>
               <div class="name" *ngIf="item.booking_type=='diag'">Diagonistic</div>

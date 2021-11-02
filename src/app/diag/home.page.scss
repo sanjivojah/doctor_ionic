@@ -14,7 +14,7 @@
 
     &.caption__top {
       .slides__featured .banner {
-        flex-direction: column !important
+        flex-direction: column !important;
       }
     }
   }
@@ -56,12 +56,10 @@
         font-weight: 600;
         text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
       }
-
     }
   }
 
   &.social {
-
     .card {
       border-radius: 3px;
       margin: 10px 5px;
@@ -79,19 +77,19 @@
         margin: 0px;
 
         &.diag {
-          background-image: url('../../assets/images/dashboard/diag.jpg')
+          background-image: url("../../assets/images/dashboard/diag.jpg");
         }
 
         &.hospital {
-          background-image: url('../../assets/images/dashboard/hospital.jpg')
+          background-image: url("../../assets/images/dashboard/hospital.jpg");
         }
 
         &.carecord {
-          background-image: url('../../assets/images/dashboard/care-cordination.jpg')
+          background-image: url("../../assets/images/dashboard/care-cordination.jpg");
         }
 
         &.clinic {
-          background-image: url('../../assets/images/dashboard/clinic.png')
+          background-image: url("../../assets/images/dashboard/clinic.png");
         }
       }
 
@@ -99,13 +97,12 @@
         text-align: center;
         font-size: 13px;
         padding: 12px 4px;
-        color: var(--text-color)
+        color: var(--text-color);
       }
     }
   }
 
   &.patient-care {
-
     .card {
       border-radius: 3px;
       margin: 10px 5px;
@@ -123,15 +120,15 @@
         margin: 0px;
 
         &.c-appoint {
-          background-image: url('../../assets/images/dashboard/appointments.jpg')
+          background-image: url("../../assets/images/dashboard/appointments.jpg");
         }
 
         &.t-appoint {
-          background-image: url('../../assets/images/dashboard/telemed.png')
+          background-image: url("../../assets/images/dashboard/telemed.png");
         }
 
         &.referrals {
-          background-image: url('../../assets/images/dashboard/referral.jpg')
+          background-image: url("../../assets/images/dashboard/referral.jpg");
         }
       }
 
@@ -139,19 +136,18 @@
         text-align: center;
         font-size: 12px;
         padding: 8px 2px;
-        color: var(--text-color)
+        color: var(--text-color);
       }
     }
   }
 
   &.deals {
-    margin-right: 16px
+    margin-right: 16px;
   }
 
   &.contd {
     margin-right: -16px;
   }
-
 }
 
 .tile {
@@ -204,14 +200,13 @@
 
       &.skip-btn {
         color: var(--text-muted-color);
-        background: transparent
+        background: transparent;
       }
 
       &:focus {
         outline: none;
       }
     }
-
   }
 }
 
@@ -245,7 +240,7 @@ section {
 }
 
 .card {
-  border: 1px solid #f8f8f8
+  border: 1px solid #f8f8f8;
 }
 
 .card__white {
@@ -289,12 +284,12 @@ section {
 
   .data-policies {
     //position: relative;
-   // padding-top: 150px;
+    // padding-top: 150px;
 
     // &::before {
-      // position: absolute;
-      // content: '';
-     // background-image: url('../../assets/images/data-security.svg');
+    // position: absolute;
+    // content: '';
+    // background-image: url('../../assets/images/data-security.svg');
     //   background-position: center;
     //   background-repeat: no-repeat;
     //   background-size: contain;
@@ -318,7 +313,7 @@ section {
       line-height: 1.25;
       text-align: center;
 
-      &+p {
+      & + p {
         margin-top: 10px;
       }
     }
@@ -338,7 +333,7 @@ section {
         margin: 0 10px;
 
         &:focus {
-          outline: none
+          outline: none;
         }
       }
     }
@@ -397,8 +392,8 @@ section {
     left: 0;
     top: 0;
     width: 100px;
-    content: '';
-    background-image: url('../../assets/images/desktop.png');
+    content: "";
+    background-image: url("../../assets/images/desktop.png");
     background-repeat: no-repeat;
     background-size: 80px;
     background-position: center;
@@ -406,11 +401,9 @@ section {
 }
 
 .deals-list {
-
   margin: 10px -32px 10px 0;
   width: 100%;
   padding-right: 16px;
-
 
   ion-item {
     --padding-start: 0;
@@ -451,12 +444,11 @@ section {
   // }
 
   ion-thumbnail {
-
     width: 75px;
     height: 75px;
 
     img {
-      border-radius: 3px
+      border-radius: 3px;
     }
   }
 
@@ -531,10 +523,9 @@ section {
       position: relative;
 
       &.show-play-btn {
-
         &::before {
           border-radius: 5px;
-          content: '';
+          content: "";
           background: rgba(0, 0, 0, 0.1);
           position: absolute;
           left: 0;
@@ -544,8 +535,8 @@ section {
         }
 
         &::after {
-          content: '';
-          background: url('../../assets/images/play-button.png') no-repeat;
+          content: "";
+          background: url("../../assets/images/play-button.png") no-repeat;
           background-position: center;
           background-size: 35px;
           position: absolute;
@@ -573,13 +564,41 @@ section {
       font-size: 14px;
       padding: 5px 0;
       text-align: left;
-      color: var(--ion-color-medium)
+      color: var(--ion-color-medium);
     }
   }
 }
 
-
-
 ion-text.topics span:not(:last-child)::after {
-  content: ', ';
+  content: ", ";
+}
+.offline {
+  color: #9c948a;
+  /* margin-right: -47px; */
+  /* padding-right: 28px; */
+  margin-left: 10px;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.filter {
+  /*color: #9c948a; */
+  /* align-items: end; */
+  text-align: right;
+  padding-right: 7px;
+}
+.alert-radio-label.sc-ion-alert-md {
+  // padding-left: unset;
+  // padding-right: unset;
+  // -webkit-padding-start: 52px;
+  // padding-inline-start: 52px;
+  // -webkit-padding-end: 26px;
+  // padding-inline-end: 26px;
+  display: flex !important;
+  overflow: auto !important;
+}
+ion-alert {
+  --display: flex !important;
+  --overflow: auto !important;
+  --background: red !important;
 }

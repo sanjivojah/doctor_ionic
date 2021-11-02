@@ -7,7 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { InteractionService } from '../_services/interaction.service';
 import { HomeDataService } from './home-data.service';
 import { HttpClient } from '@angular/common/http';
-
+import { Location } from "@angular/common";
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -19,8 +19,9 @@ export class HomePage implements OnInit {
   darkMode: boolean;
   showPrivacyBanner = true;
   showReminder: boolean;
-
+  datess=[]
   row_data = []
+  offlinedata = []
 
   constructor(
     private title: Title,
@@ -32,11 +33,29 @@ export class HomePage implements OnInit {
     private router: Router,
     private homeData: HomeDataService,
     private http: HttpClient,
-    private zone:NgZone
+    private zone:NgZone,
+    private location:Location
   ) { }
 
   ngOnInit() {
+    var someDate = new Date();
+    var dd = someDate.getDate();
+    var mm = someDate.getMonth();
+    var y = someDate.getFullYear();
+    var someFormattedDate = dd + '-'+ mm + '-'+ y;
+    this.datess.push(someFormattedDate)
+    var dd1 = someDate.getDate()+1;
+    var mm1 = someDate.getMonth();
+    var y1 = someDate.getFullYear();
+    var someFormattedDat1 = dd1 + '-'+ mm1 + '-'+ y1;
+    this.datess.push(someFormattedDat1)
+    var dd2 = someDate.getDate()+2;
+    var mm2 = someDate.getMonth();
+    var y2 = someDate.getFullYear();
+    var someFormattedDate2 = dd2 + '-'+ mm2 + '-'+ y2;
+    this.datess.push(someFormattedDate2)
     this.getdata()
+    this.getofflinedata()
     this.title.setTitle('Doctor Dashboard');
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
@@ -54,18 +73,51 @@ export class HomePage implements OnInit {
   getdata(){
     const formData = new FormData();
     formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
-    this.http.post("https://projectnothing.xyz/doctorapp/APIs/alldoctor.php", formData)
+    this.http.post("https://cureplus.online/APIs/alldoctor.php", formData)
     .pipe(
       finalize(() => {
       })
     )
     .subscribe(res => {
       this.row_data=[]
+      var l=0
+      this.zone.run(() => {
+        var json=JSON.parse(JSON.stringify(res))
+        for(var i=0; i<json.length;i++){
+          l++
+          console.log(json[0])
+          this.row_data.push({
+            dataid: 'dates'+l,
+            name: json[i].name,
+            category:json[i].category,
+            address:json[i].address,
+            rating:json[i].rating,
+            sex:json[i].sex,
+            count:Number(json[i].maxlimit),
+            status:json[i].status,
+            id:json[i].id
+          })
+        }
+      });
+  
+    });
+  }
+
+  getofflinedata(){
+    const formData = new FormData();
+    formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+    this.http.post("https://cureplus.online/APIs/alldoctoroffline.php", formData)
+    .pipe(
+      finalize(() => {
+      })
+    )
+    .subscribe(res => {
+      this.offlinedata=[]
       this.zone.run(() => {
         var json=JSON.parse(JSON.stringify(res))
         for(var i=0; i<json.length;i++){
           //console.log(json[0])
-          this.row_data.push({
+          this.offlinedata.push({
             name: json[i].name,
             category:json[i].category,
             address:json[i].address,
@@ -122,14 +174,22 @@ export class HomePage implements OnInit {
     this.hideBanner();
     this.nav.navigateForward('/account/my-profile');
   }
-  view_full(id){
-    //alert(id)
-    this.router.navigateByUrl('/doctorprofile/'+id);
-    //"/doctorprofile/
+  view_full(id,actualid){
+    var dates = ((document.getElementById(actualid) as HTMLInputElement).value);
+   
+    if(dates){
+       this.router.navigateByUrl('/doctorprofile/'+id+'/'+dates);
+    }
+    else{
+      this.presentToast('Please Select a Date for appointment')
+    }
   }
 
   // dismissReminder() {
   //   this.showReminder = false;
   // }
+  goBack(){
+    this.location.back();
+  }
 
 }

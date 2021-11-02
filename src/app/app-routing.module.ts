@@ -63,11 +63,11 @@ const routes: Routes = [
     loadChildren: './allapointment/home.module#HomePageModule'
   },
   {
-    path: 'booking/:id/:type',
+    path: 'booking/:id/:type/:time',
     loadChildren: './booking/home.module#HomePageModule'
   },
   {
-    path: 'allprofiles/:id/:type',
+    path: 'allprofiles/:id/:type/:time',
     loadChildren: './allprofiles/home.module#HomePageModule'
   },
   
@@ -96,7 +96,7 @@ const routes: Routes = [
     loadChildren: './offer/home.module#HomePageModule'
   },
   {
-    path: 'doctorprofile/:id',
+    path: 'doctorprofile/:id/:time',
     loadChildren: './doctorprofile/home.module#HomePageModule'
   },
   { 

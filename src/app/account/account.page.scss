@@ -1,5 +1,4 @@
 .account-page {
-
   .user-header {
     display: grid;
     // grid-template-columns: 60px 1fr;
@@ -68,13 +67,10 @@
 .list-wrapper {
   margin: 4px 0 0 0;
 
-
-
   ion-item {
     font-size: 15px;
     color: var(--text-color);
   }
-
 
   &.main-list {
     ion-icon {
@@ -84,11 +80,11 @@
 
     ion-label {
       h4 {
-        color: var(--header-title-color)
+        color: var(--header-title-color);
       }
 
       ion-text {
-        font-size: 13px
+        font-size: 13px;
       }
     }
   }
@@ -123,11 +119,11 @@
       margin: -1px;
 
       &.dnetwork {
-        background-image: url('https://projectnothing.xyz/doctorapp/app/images/myaccount/appoint.jpg')
+        background-image: url("https://cureplus.online/app/images/myaccount/appoint.jpg");
       }
 
       &.tcircle {
-        background-image: url('../../assets/images/topic-circle.jpg')
+        background-image: url("../../assets/images/topic-circle.jpg");
       }
     }
 
@@ -135,7 +131,7 @@
       text-align: center;
       font-size: 13px;
       padding: 12px 4px;
-      color: var(--text-color)
+      color: var(--text-color);
     }
   }
 }

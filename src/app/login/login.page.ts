@@ -53,6 +53,8 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit() {
+    let today = new Date().toLocaleDateString()
+
     this.loginBtnText = 'Signing in...';
     this.formSubmitted = true;
 
@@ -70,7 +72,7 @@ export class LoginPage implements OnInit {
       formData.append('username', loginData.userId)
       formData.append('password', loginData.pw)
       
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/login.php", formData)
+      this.http.post("https://cureplus.online/APIs/login.php", formData)
       .pipe(
         finalize(() => {
         })
@@ -82,6 +84,7 @@ export class LoginPage implements OnInit {
           if(json.message=='success'){
                 console.log(json.username)
                 localStorage.setItem('username', loginData.userId)
+                localStorage.setItem('notidate', today)
                 localStorage.setItem('name', json.username)
                 this.nav.navigateForward('/home');
           }

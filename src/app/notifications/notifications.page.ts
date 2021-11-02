@@ -24,7 +24,7 @@ export class NotificationsPage implements OnInit {
 
   dataLoading: boolean;
   noNotif: boolean;
-
+  today:any
   constructor(
     private title: Title,
     private modal: ModalController,
@@ -39,6 +39,7 @@ export class NotificationsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.today=localStorage.getItem('notidate')
     this.title.setTitle('Notifications');
     this.getNotifications();
   }

@@ -15,8 +15,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './_components/components.module';
 import { SearchComponent } from './_components/search/search.component';
 import { PDFGenerator } from '@ionic-native/pdf-generator/ngx';
-
+import { OneSignal } from '@ionic-native/onesignal/ngx'
 import { Clipboard } from '@ionic-native/clipboard/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,10 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
     SplashScreen,
     PDFGenerator,
     Clipboard,
+    OneSignal,
+    Geolocation,
+    AndroidPermissions,
+    LocationAccuracy,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

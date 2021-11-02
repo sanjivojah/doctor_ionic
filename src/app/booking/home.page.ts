@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 declare var RazorpayCheckout: any;
-
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-home',
@@ -28,6 +28,7 @@ export class HomePage implements OnInit {
   offeramount=0
   totalamount:any
   row_data=[]
+  modees=[]
   celebration=false
   celbr:any
   paymentmethod=false
@@ -36,7 +37,7 @@ export class HomePage implements OnInit {
   bookingid:any
   booking_name:any
   booking_address:any
-
+  bookingtime:any
   paymentAmount: number = 333;
   currency: string = 'INR';
   currencyIcon: string = '$';
@@ -56,12 +57,14 @@ export class HomePage implements OnInit {
     private http: HttpClient,
     private zone:NgZone,
     private activeRoute: ActivatedRoute,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private location:Location
   ) { }
 
   ngOnInit() {
     this.type = this.activeRoute.snapshot.paramMap.get('type')
     this.id = this.activeRoute.snapshot.paramMap.get('id')
+    this.bookingtime = this.activeRoute.snapshot.paramMap.get('time')
     
   }
 
@@ -76,7 +79,7 @@ export class HomePage implements OnInit {
       const formData = new FormData();
       formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
       formData.append('id', id)
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/selectdoctor.php", formData)
+      this.http.post("https://cureplus.online/APIs/selectdoctor.php", formData)
       .pipe(
         finalize(() => {
         })
@@ -93,10 +96,17 @@ export class HomePage implements OnInit {
           this.calculate(this.offeramount)
           var slots=json[0].slots
           var jsonss=slots.split(",");
+          var modes=json[0].mode
+          var modesp=modes.split(",");
           this.bookingid=json[0].id
           for(var i=0; i<jsonss.length;i++){
             this.row_data.push({
               slots:jsonss[i]
+            })
+          }
+          for(var i=0; i<modesp.length;i++){
+            this.modees.push({
+              mode:modesp[i]
             })
           }
         });
@@ -107,7 +117,7 @@ export class HomePage implements OnInit {
       const formData = new FormData();
       formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
       formData.append('id', id)
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/selecthospital.php", formData)
+      this.http.post("https://cureplus.online/APIs/selecthospital.php", formData)
       .pipe(
         finalize(() => {
         })
@@ -128,6 +138,13 @@ export class HomePage implements OnInit {
           for(var i=0; i<jsonss.length;i++){
             this.row_data.push({
               slots:jsonss[i]
+            })
+          }
+          var modes=json[0].mode
+          var modesp=modes.split(",");
+          for(var i=0; i<modesp.length;i++){
+            this.modees.push({
+              mode:modesp[i]
             })
           }
         });
@@ -138,7 +155,7 @@ export class HomePage implements OnInit {
       const formData = new FormData();
       formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
       formData.append('id', id)
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/selectdiag.php", formData)
+      this.http.post("https://cureplus.online/APIs/selectdiag.php", formData)
       .pipe(
         finalize(() => {
         })
@@ -161,6 +178,13 @@ export class HomePage implements OnInit {
               slots:jsonss[i]
             })
           }
+          var modes=json[0].mode
+          var modesp=modes.split(",");
+          for(var i=0; i<modesp.length;i++){
+            this.modees.push({
+              mode:modesp[i]
+            })
+          }
         });
     
       })
@@ -169,7 +193,7 @@ export class HomePage implements OnInit {
       const formData = new FormData();
       formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
       formData.append('id', id)
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/selectclinic.php", formData)
+      this.http.post("https://cureplus.online/APIs/selectclinic.php", formData)
       .pipe(
         finalize(() => {
         })
@@ -177,6 +201,7 @@ export class HomePage implements OnInit {
       .subscribe(res => {
       
         this.row_data=[]
+        this.modees=[]
         this.zone.run(() => {
           var json=JSON.parse(JSON.stringify(res))
           console.log(json)
@@ -190,6 +215,13 @@ export class HomePage implements OnInit {
           for(var i=0; i<jsonss.length;i++){
             this.row_data.push({
               slots:jsonss[i]
+            })
+          }
+          var modes=json[0].mode
+          var modesp=modes.split(",");
+          for(var i=0; i<modesp.length;i++){
+            this.modees.push({
+              mode:modesp[i]
             })
           }
         });
@@ -235,7 +267,7 @@ export class HomePage implements OnInit {
       formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
       formData.append('type', this.type)
       formData.append('offer', offer)
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/applyoffer.php", formData)
+      this.http.post("https://cureplus.online/APIs/applyoffer.php", formData)
       .pipe(
         finalize(() => {
         })
@@ -296,12 +328,18 @@ export class HomePage implements OnInit {
     var address = ((document.getElementById("address") as HTMLInputElement).value);
     var bloodgroup = ((document.getElementById("bloodgroup") as HTMLInputElement).value);
     var slot = ((document.getElementById("slot") as HTMLInputElement).value);
-
-    if(!slot){
+    var modes = ((document.getElementById("mode") as HTMLInputElement).value);
+    if(!modes){
+      this.presentToast('Please select a desire Mode')
+    }
+    else if(!slot){
       this.presentToast('Please select a desire slot')
     }
     else if(!name || !phone || !address || !bloodgroup){
       this.presentToast('Please fill you details')
+    }
+    else if(!this.validatephone(phone)){
+      this.presentToast('Please Enter a valid Phone Number')
     }
     else{
       this.paymentmethod=true
@@ -311,11 +349,12 @@ export class HomePage implements OnInit {
    
   }
   pay(){
-    var mode = ((document.getElementById("mode") as HTMLInputElement).value);
-    if(!mode){
+    var modea = ((document.getElementById("modesssss") as HTMLInputElement).value);
+    //alert(modea)
+    if(!modea){
       this.presentToast('Please select a payment mode')
     }
-    else if(mode=='online'){
+    else if(modea=='online'){
       this.presentToast('Online Payment Mode Not Available')
       //this.payWithRazor(this.totalamount) 
     }
@@ -326,6 +365,10 @@ export class HomePage implements OnInit {
       var address = ((document.getElementById("address") as HTMLInputElement).value);
       var bloodgroup = ((document.getElementById("bloodgroup") as HTMLInputElement).value);
       var slot = ((document.getElementById("slot") as HTMLInputElement).value);
+      //***********/
+      var bookingdate = ((document.getElementById("bookingdate") as HTMLInputElement).value);
+      var modes = ((document.getElementById("mode") as HTMLInputElement).value);
+      //*********/
       //var newDate = new Date();
       var datee = new Date().toLocaleDateString();
       const formData = new FormData();
@@ -347,8 +390,11 @@ export class HomePage implements OnInit {
       formData.append('booking_name', this.booking_name)
       formData.append('booking_address', this.booking_address)
 
+      formData.append('selecteddate', bookingdate)
+      formData.append('modeofbooking', modes)
 
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/booking.php", formData)
+
+      this.http.post("https://cureplus.online/APIs/booking.php", formData)
       .pipe(
         finalize(() => {
         })
@@ -419,7 +465,7 @@ export class HomePage implements OnInit {
       formData.append('booking_name', this.booking_name)
       formData.append('booking_address', this.booking_address)
 
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/booking.php", formData)
+      this.http.post("https://cureplus.online/APIs/booking.php", formData)
       .pipe(
         finalize(() => {
         })
@@ -458,6 +504,17 @@ export class HomePage implements OnInit {
 
     const { role } = await alert.onDidDismiss();
     console.log('onDidDismiss resolved with role', role);
+  }
+  goBack(){
+    this.location.back();
+  }
+  validatephone(phone){
+    if(phone.length==10){
+      return true
+    }
+    else{
+      return false
+    }
   }
 
  

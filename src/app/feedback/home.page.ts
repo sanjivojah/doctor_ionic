@@ -62,8 +62,20 @@ export class HomePage implements OnInit {
     var remark = ((document.getElementById("remark") as HTMLInputElement).value);
     var userid=localStorage.getItem('username')
     var callback = ((document.getElementById("callback") as HTMLInputElement).value);
+    console.log(phone.length)
+    console.log(this.validatephone(phone))
     if(!name || !phone || !email || !remark || !callback){
       this.presentToast('Some Field are missing')
+    }    
+    else if(!this.validatephone(phone)) 
+    {  
+      this.presentToast('Invalid Phone Number')  
+    }
+    else if(!this.validateEmail(email)){
+      this.presentToast('Invalid Email')  
+    }
+    else if(callback=='yes' && !phone){
+      this.presentToast('Phone Number cannot be empty')  
     }
     else{
     formData.append('name', name)
@@ -73,7 +85,7 @@ export class HomePage implements OnInit {
     formData.append('userid',userid)
     formData.append('callback',callback)
 
-    this.http.post("https://projectnothing.xyz/doctorapp/APIs/feedback.php", formData)
+    this.http.post("https://cureplus.online/APIs/feedback.php", formData)
     .pipe(
       finalize(() => {
       })
@@ -128,6 +140,19 @@ export class HomePage implements OnInit {
 
   dismissReminder() {
     this.showReminder = false;
+  }
+  validateEmail(email) 
+  {
+      var re = /\S+@\S+\.\S+/;
+      return re.test(email);
+  }
+  validatephone(phone){
+    if(phone.length==10){
+      return true
+    }
+    else{
+      return false
+    }
   }
 
 }

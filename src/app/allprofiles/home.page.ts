@@ -8,6 +8,7 @@ import { HomeDataService } from './home-data.service';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { Location } from "@angular/common";
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -44,6 +45,8 @@ export class HomePage implements OnInit {
     private http: HttpClient,
     private zone:NgZone,
     private activeRoute: ActivatedRoute,
+    private location:Location
+
   ) { }
 
   ngOnInit() {
@@ -66,7 +69,7 @@ export class HomePage implements OnInit {
     const formData = new FormData();
     formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
     formData.append('id', id)
-    this.http.post("https://projectnothing.xyz/doctorapp/APIs/selectclinic.php", formData)
+    this.http.post("https://cureplus.online/APIs/selectclinic.php", formData)
     .pipe(
       finalize(() => {
       })
@@ -98,7 +101,7 @@ export class HomePage implements OnInit {
       const formData = new FormData();
       formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
       formData.append('id', id)
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/selectdiag.php", formData)
+      this.http.post("https://cureplus.online/APIs/selectdiag.php", formData)
       .pipe(
         finalize(() => {
         })
@@ -133,7 +136,7 @@ export class HomePage implements OnInit {
       const formData = new FormData();
       formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
       formData.append('id', id)
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/selecthospital.php", formData)
+      this.http.post("https://cureplus.online/APIs/selecthospital.php", formData)
       .pipe(
         finalize(() => {
         })
@@ -207,15 +210,19 @@ export class HomePage implements OnInit {
     }
   }
   book(){
+    var dates = this.activeRoute.snapshot.paramMap.get('time')
     if(this.type=='clinic'){
-    this.router.navigateByUrl('/booking/'+this.id+'/clinic');
+    this.router.navigateByUrl('/booking/'+this.id+'/clinic/'+dates);
     }
     if(this.type=='diag'){
-      this.router.navigateByUrl('/booking/'+this.id+'/diag');
+      this.router.navigateByUrl('/booking/'+this.id+'/diag/'+dates);
     }
     if(this.type=='hospital'){
-      this.router.navigateByUrl('/booking/'+this.id+'/hospital');
+      this.router.navigateByUrl('/booking/'+this.id+'/hospital/'+dates);
     }
+  }
+  goBack(){
+    this.location.back();
   }
 
 

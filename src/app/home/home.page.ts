@@ -216,7 +216,7 @@ export class HomePage implements OnInit {
     const formData = new FormData();
     formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
     formData.append('userid', userid)
-    this.http.post("https://projectnothing.xyz/doctorapp/APIs/recentappointment.php", formData)
+    this.http.post("https://cureplus.online/APIs/recentappointment.php", formData)
     .pipe(
       finalize(() => {
       })
@@ -226,7 +226,6 @@ export class HomePage implements OnInit {
       this.zone.run(() => {
         var json=JSON.parse(JSON.stringify(res))
         for(var i=0; i<json.length;i++){
-          console.log(json[0])
           this.row_data.push({
             booking_type: json[i].booking_type,
             name: json[i].booking_name,

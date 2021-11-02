@@ -114,6 +114,7 @@ export class AccountPage implements OnInit {
   }
 
   doLogout() {
+    localStorage.setItem('username', '')
     this.nav.navigateRoot(['/login']);
   }
 

@@ -7,7 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { InteractionService } from '../_services/interaction.service';
 import { HomeDataService } from './home-data.service';
 import { HttpClient } from '@angular/common/http';
-
+import { Location } from "@angular/common";
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -32,7 +32,8 @@ export class HomePage implements OnInit {
     private router: Router,
     private homeData: HomeDataService,
     private http: HttpClient,
-    private zone:NgZone
+    private zone:NgZone,
+    private location:Location
   ) { }
 
   ngOnInit() {
@@ -56,7 +57,7 @@ export class HomePage implements OnInit {
     const formData = new FormData();
     formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
     formData.append('phone', phone)
-    this.http.post("https://projectnothing.xyz/doctorapp/APIs/allappointment.php", formData)
+    this.http.post("https://cureplus.online/APIs/allappointment.php", formData)
     .pipe(
       finalize(() => {
       })
@@ -130,5 +131,8 @@ export class HomePage implements OnInit {
   // dismissReminder() {
   //   this.showReminder = false;
   // }
+  goBack(){
+    this.location.back();
+  }
 
 }

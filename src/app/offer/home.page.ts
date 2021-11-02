@@ -56,7 +56,7 @@ export class HomePage implements OnInit {
   getdata(){
     const formData = new FormData();
     formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
-    this.http.post("https://projectnothing.xyz/doctorapp/APIs/alloffer.php", formData)
+    this.http.post("https://cureplus.online/APIs/alloffer.php", formData)
     .pipe(
       finalize(() => {
       })

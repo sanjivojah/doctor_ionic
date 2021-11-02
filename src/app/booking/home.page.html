@@ -1,3 +1,13 @@
+<ion-header class="flat">
+  <ion-toolbar class="colore">
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="goBack()">
+        <ion-icon ios="md-arrow-back" md="md-arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title color="dark" text-center>Booking</ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <div class="container">
     <!-- code here -->
@@ -43,6 +53,10 @@
           <label class="input-label">Blood Group</label>
         </div>
 
+        <div class="input">
+          <input style="opacity: 0.6;" type="text" class="input-field"  id="bookingdate" value="{{bookingtime}}" disabled/>
+          <label class="input-label1">Booking Date</label>
+        </div>
       
 
         <div class="input">
@@ -57,7 +71,17 @@
           </ion-row>
         </div>
 
-
+        <div class="input">
+          <label class="input-label1">Select Mode</label>
+          <ion-radio-group id="mode">
+            <div *ngFor='let data of modees'>
+              <ion-item>
+                <ion-label>{{data.mode}}</ion-label>
+                <ion-radio slot="start" color="success" value="{{data.mode}}"></ion-radio>
+              </ion-item>
+            </div>
+          </ion-radio-group>
+        </div>
 
         <div class="input">
           <label class="input-label1">Select your slot</label>
@@ -101,10 +125,10 @@
 
         <div class="input" *ngIf="paymentmethod">
           <label class="input-label1">Select Payment Method</label>
-          <ion-radio-group id="mode">
+          <ion-radio-group id="modesssss">
               <ion-item>
                 <ion-label>Pay Now</ion-label>
-                <ion-radio slot="start" color="success" value="online"></ion-radio>
+                <ion-radio slot="start" color="success" value="online" disabled></ion-radio>
               </ion-item>
               <ion-item>
                 <ion-label>Pay During Visit</ion-label>

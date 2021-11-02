@@ -9,7 +9,7 @@
           <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
             <div class="input-row">
               <mat-form-field appearance="outline" class="d-block">
-                <mat-label class="cff">UserId</mat-label>
+                <mat-label class="cff">Phone</mat-label>
                 <input matInput placeholder="Enter your number" spellcheck="false" formControlName="userId" type="number"
                   class="cff" autocomplete="off">
                 <mat-error *ngIf="loginForm.controls['userId'].errors">{{getErrorMessage('id')}}</mat-error>

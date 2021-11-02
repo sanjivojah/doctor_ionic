@@ -88,7 +88,7 @@ export class SignupFormComponent implements OnInit {
       formData.append('password', password)
       formData.append('address', e.value.address)
       formData.append('age', e.value.age)
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/registration2.php", formData)
+      this.http.post("https://cureplus.online/APIs/registration2.php", formData)
       .pipe(
         finalize(() => {
         })

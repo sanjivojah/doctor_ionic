@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { PDFGenerator } from '@ionic-native/pdf-generator/ngx';
-
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-home',
@@ -50,10 +50,15 @@ export class HomePage implements OnInit {
     private zone:NgZone,
     private activeRoute: ActivatedRoute,
     public alertController: AlertController,
-    private pdfGenerator: PDFGenerator
+    private pdfGenerator: PDFGenerator,
+    private location:Location
   ) { }
 
   ngOnInit() {
+    // var ddd=this.router.url
+    // const myArr = ddd.split("/")
+    // console.log(myArr)
+    console.log(this.location.isCurrentPathEqualTo('/bill/3'))
     this.id = this.activeRoute.snapshot.paramMap.get('userid')
     
   }
@@ -83,7 +88,7 @@ export class HomePage implements OnInit {
       const formData = new FormData();
       formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
       formData.append('id', id)
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/bill.php", formData)
+      this.http.post("https://cureplus.online/APIs/bill.php", formData)
       .pipe(
         finalize(() => {
         })
@@ -94,7 +99,7 @@ export class HomePage implements OnInit {
           console.log(json)
           this.patient_name=json[0].patient_name
           this.name=json[0].booking_name
-          this.slotdate=json[0].slot +','+ json[0].date
+          this.slotdate=json[0].slot +','+ json[0].selecteddate
           this.address=json[0].booking_address
           this.paymentmethod=json[0].paymentmode
           this.transctionid=json[0].transaction_id
@@ -138,6 +143,10 @@ export class HomePage implements OnInit {
     });
     toast.present();
   }
+  goBack(){
+    this.router.navigateByUrl('/home');
+  }
+
 
  
 

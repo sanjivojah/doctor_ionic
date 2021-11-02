@@ -77,7 +77,7 @@ export class SendOtpComponent implements OnInit {
       const formData = new FormData();
       formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
       formData.append('id', e.value.mobileNo)
-      this.http.post("https://projectnothing.xyz/doctorapp/APIs/registration1.php", formData)
+      this.http.post("https://cureplus.online/APIs/registration1.php", formData)
       .pipe(
         finalize(() => {
         })

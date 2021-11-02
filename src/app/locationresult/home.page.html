@@ -1,16 +1,12 @@
+
 <ion-header class="flat">
-  <ion-toolbar class="colored">
+  <ion-toolbar class="colore">
     <ion-buttons slot="start">
-      <ion-button color="light" routerDirection="forward" routerLink="/account">
-        <ion-icon ios="md-contact" md="md-contact"></ion-icon>
+      <ion-button color="dark" (click)="goBack()">
+        <ion-icon ios="md-arrow-back" md="md-arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title color="light" text-center>Location Search</ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="light" (click)="initSearch()">
-        <ion-icon ios="ios-search" md="ios-search"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title color="dark" text-center>Location Search</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -31,8 +27,17 @@
             <ion-row>
               <ion-avatar>
                 <ion-col>
-                  <div >
+                  <div *ngIf='data.type=="Hospital"'>
+                    <img src="https://cureplus.online/app/images/hospital/hospital.png">
+                  </div>
+                  <div *ngIf='data.type=="Doctor"'>
                     <img src="https://st2.depositphotos.com/4226061/9064/v/950/depositphotos_90647730-stock-illustration-female-doctor-avatar-icon.jpg">
+                  </div>
+                  <div *ngIf='data.type=="Clinic"'>
+                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+                  </div>
+                  <div *ngIf='data.type=="Diagnostic"'>
+                    <img src="https://cureplus.online/app/images/dcenter/dcenter.png">
                   </div>
                 </ion-col>
               </ion-avatar>
@@ -50,12 +55,26 @@
         {{data.address}}
         </ion-card-content> -->
         <ion-card-content style="text-align: right;">
-          <div *ngIf='data.count==0 || data.status=="no"'>
-            <ion-button color="danger">Booked</ion-button>
-          </div>
-          <div *ngIf='data.count!=0 || data.status!="no"'>
-            <ion-button color="success" (click)='view_full(data.id,data.type)'>Available</ion-button>
-          </div>
+          <ion-row>
+            <ion-col size="7" >
+              <ion-item *ngIf='data.count!=0 && data.status!="no"'>
+                <ion-label>Select</ion-label>
+                <ion-select id="{{data.dataid}}">
+                  <div *ngFor='let dates of datess'>
+                    <ion-select-option value="{{dates}}">{{dates}}</ion-select-option>
+                  </div>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="5">
+              <div *ngIf='data.count==0 '>
+                <ion-button color="danger">Booked</ion-button>
+              </div>
+              <div *ngIf='data.count!=0 '>
+                <ion-button color="success" (click)='view_full(data.id,data.type,data.dataid)'>Available</ion-button>
+              </div>
+            </ion-col>
+            </ion-row>
         </ion-card-content>
       </ion-card>
   </div>

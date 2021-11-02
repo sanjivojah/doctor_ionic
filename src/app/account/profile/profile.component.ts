@@ -72,7 +72,7 @@ export class ProfileComponent implements OnInit {
     formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
     formData.append('id', phone)
     
-    this.http.post("https://projectnothing.xyz/doctorapp/APIs/profile.php", formData)
+    this.http.post("https://cureplus.online/APIs/profile.php", formData)
     .pipe(
       finalize(() => {
       })

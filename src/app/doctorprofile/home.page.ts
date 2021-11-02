@@ -8,6 +8,7 @@ import { HomeDataService } from './home-data.service';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { Location } from "@angular/common";
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -42,6 +43,7 @@ export class HomePage implements OnInit {
     private http: HttpClient,
     private zone:NgZone,
     private activeRoute: ActivatedRoute,
+    private location:Location
   ) { }
 
   ngOnInit() {
@@ -61,7 +63,7 @@ export class HomePage implements OnInit {
     const formData = new FormData();
     formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
     formData.append('id', id)
-    this.http.post("https://projectnothing.xyz/doctorapp/APIs/selectdoctor.php", formData)
+    this.http.post("https://cureplus.online/APIs/selectdoctor.php", formData)
     .pipe(
       finalize(() => {
       })
@@ -132,7 +134,11 @@ export class HomePage implements OnInit {
     }
   }
   book(){
-    this.router.navigateByUrl('/booking/'+this.id+'/doctor');
+    var dates = this.activeRoute.snapshot.paramMap.get('time')
+    this.router.navigateByUrl('/booking/'+this.id+'/doctor/'+dates);
+  }
+  goBack(){
+    this.location.back();
   }
 
 

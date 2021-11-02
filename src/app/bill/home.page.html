@@ -1,11 +1,11 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons (click)="closeModal()" slot="start">
-      <ion-button slot="icon">
-        <ion-icon class="icon" name="arrow-back-outline"></ion-icon>
+<ion-header class="flat">
+  <ion-toolbar class="colore">
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="goBack()">
+        <ion-icon ios="md-arrow-back" md="md-arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="title-ios ion-text-capitalize">Booking Invoice</ion-title>
+    <ion-title color="dark" text-center>Reciept</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -18,7 +18,7 @@
             <tr>
               <td class="title"
                 style="padding: 5px;vertical-align: top;padding-bottom: 20px;font-size: 45px;line-height: 45px;color: #333;">
-                <img src="../../../assets/enappd.png" style="width:100%; max-width:300px;">
+                <img src="assets/images/cureplus.png" style="width:70%;">
               </td>
 
               <td style="padding: 5px;vertical-align: top;text-align: right;padding-bottom: 20px;">
@@ -123,7 +123,7 @@
   </div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button  (click)="downloadInvoice()">
-      <ion-icon name="cloud-download-outline"></ion-icon>
+      <img src="assets/images/download.png" style="width:100%;">
     </ion-fab-button>
   </ion-fab>
 </ion-content>

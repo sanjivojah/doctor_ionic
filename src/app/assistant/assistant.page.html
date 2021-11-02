@@ -1,12 +1,37 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Location</ion-title>
+<ion-header class="flat">
+  <ion-toolbar class="colore">
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="goBack()">
+        <ion-icon ios="md-arrow-back" md="md-arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title color="dark" text-center>Locations</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <!-- <ion-card>
     <ion-card-content> -->
-      <ion-grid>
+    <ion-grid >
+      <div style="text-align: right;"><ion-button size="small" (click)="reset()">Reset Selection</ion-button></div>
+    </ion-grid>
+    <ion-grid *ngIf='flag'>
+        <ion-row>
+          <ion-col (click)="setlocation('Guwahati')">
+            <div class="container-fluid" text-center>
+              <img src="https://in.bmscdn.com/m6/images/common-modules/regions/mumbai.png" width="50" height="50"> 
+              <p>Guwahati</p>       
+            </div>
+          </ion-col>
+          <ion-col >
+          </ion-col>
+          <ion-col >
+            
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+      <ion-grid *ngIf="setlocations=='Guwahati'">
         <ion-row>
           <ion-col (click)="goto('Beltola')">
             <div class="container-fluid" text-center>
