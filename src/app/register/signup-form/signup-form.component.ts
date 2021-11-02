@@ -95,6 +95,10 @@ export class SignupFormComponent implements OnInit {
       )
       .subscribe(res => {
         if(res){
+          fetch('https://neat.freebeesms.com/api/send_http.php?authkey=2c7928d23a77e0287e3c9c333a856ee6&mobiles='+mobilenumber+'&message=Welcome+to+Cure+Plus.+We+are+focused+on+Medical+Consultation+and+Diagnostic+appointment+service.+Encash+your+benefit+share.+Book+now!SJNEAT&sender=SJNEAT&route=4&Template_ID=1507163497989196487').then(res => res.json())
+              .then(json => {  
+                console.log(json)  
+          });
           localStorage.setItem('mobilenumber', '')
           localStorage.setItem('password', '')
           localStorage.setItem('username', mobilenumber)
