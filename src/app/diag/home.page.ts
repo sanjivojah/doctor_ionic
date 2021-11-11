@@ -72,6 +72,7 @@ export class HomePage implements OnInit {
 
 
   getdata(){
+    this.getofflinedata()
     const formData = new FormData();
     formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
     this.http.post("https://cureplus.online/APIs/alldiag.php", formData)
