@@ -329,7 +329,11 @@ export class HomePage implements OnInit {
     var bloodgroup = ((document.getElementById("bloodgroup") as HTMLInputElement).value);
     var slot = ((document.getElementById("slot") as HTMLInputElement).value);
     var modes = ((document.getElementById("mode") as HTMLInputElement).value);
-    if(!modes){
+    var checkbutton = ((document.getElementById("checkbutton") as HTMLInputElement).checked);
+    if(!checkbutton){
+      this.presentToast('Terms and Conditions must be applied')
+    }
+    else if(!modes){
       this.presentToast('Please select a desire Mode')
     }
     else if(!slot){
@@ -341,6 +345,7 @@ export class HomePage implements OnInit {
     else if(!this.validatephone(phone)){
       this.presentToast('Please Enter a valid Phone Number')
     }
+    
     else{
       this.paymentmethod=true
       this.bookbutton=false

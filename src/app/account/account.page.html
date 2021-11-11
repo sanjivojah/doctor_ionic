@@ -56,10 +56,10 @@
         Settings
       </ion-label>
       <ion-list class="list-wrapper setting-list">
-        <ion-item lines="inset">
+        <!-- <ion-item lines="inset">
           <ion-label>Dark Mode</ion-label>
           <ion-toggle slot="end" (ionChange)="changeUIMode($event)" [checked]="darkMode"></ion-toggle>
-        </ion-item>
+        </ion-item> -->
         <ion-item lines="inset" class="clickable" (click)="logout()">
           <ion-label class="logout">Log Out</ion-label>
         </ion-item>
@@ -67,8 +67,8 @@
     </section>
     <section>
       <div class="app-info">
-        <h6>{{appName}}</h6>
-        <small>Version {{version}}</small>
+        <h6>Cure Plus</h6>
+        <small>Version 0.0.2</small>
       </div>
     </section>
   </div>

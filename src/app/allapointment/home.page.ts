@@ -73,7 +73,8 @@ export class HomePage implements OnInit {
             bokkingdatetime:json[i].bokkingdatetime,
             slot:json[i].slot,
             id:json[i].id,
-            booking_address:json[i].booking_address
+            booking_address:json[i].booking_address,
+            bookingstatus:json[i].status
           })
         }
       });

@@ -49,9 +49,59 @@
         </div>
 
         <div class="input">
+          <label class="input-label1">Blood Group</label>
+          <ion-item>
+            <ion-label>Select Blood Group</ion-label>
+            <ion-select value="A+" interface="action-sheet"  id="bloodgroup">
+              <ion-select-option value="A+">A+</ion-select-option>
+              <ion-select-option value="A-">A-</ion-select-option>
+              <ion-select-option value="B+">B+</ion-select-option>
+              <ion-select-option value="B-">B-</ion-select-option>
+              <ion-select-option value="0+">0+</ion-select-option>
+              <ion-select-option value="0-">0-</ion-select-option>
+              <ion-select-option value="AB+">AB+</ion-select-option>
+              <ion-select-option value="AB-">AB-</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <!-- <ion-radio-group id="bloodgroup">
+              <ion-item>
+                <ion-label>A+</ion-label>
+                <ion-radio slot="start" color="success" value="A+"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>A-</ion-label>
+                <ion-radio slot="start" color="success" value="A-"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>B+</ion-label>
+                <ion-radio slot="start" color="success" value="B+"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>B-</ion-label>
+                <ion-radio slot="start" color="success" value="B-"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>O+</ion-label>
+                <ion-radio slot="start" color="success" value="O+"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>O-</ion-label>
+                <ion-radio slot="start" color="success" value="O+"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>AB+</ion-label>
+                <ion-radio slot="start" color="success" value="AB+"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>AB-</ion-label>
+                <ion-radio slot="start" color="success" value="AB-"></ion-radio>
+              </ion-item>
+          </ion-radio-group> -->
+        </div>
+        <!-- <div class="input">
           <input type="text" class="input-field"  id="bloodgroup" required/>
           <label class="input-label">Blood Group</label>
-        </div>
+        </div> -->
 
         <div class="input">
           <input style="opacity: 0.6;" type="text" class="input-field"  id="bookingdate" value="{{bookingtime}}" disabled/>
@@ -72,7 +122,7 @@
         </div>
 
         <div class="input">
-          <label class="input-label1">Select Mode</label>
+          <label class="input-label1">Mode of Consultation</label>
           <ion-radio-group id="mode">
             <div *ngFor='let data of modees'>
               <ion-item>
@@ -118,7 +168,10 @@
             </ion-col>
           </ion-row>
         </div>
-        
+        <ion-item *ngIf="bookbutton">
+          <ion-checkbox color="danger" checked slot="start" id="checkbutton"></ion-checkbox>
+          <ion-label>Terms and Conditions Applied</ion-label>
+        </ion-item>
         <div class="action" *ngIf="bookbutton">
           <button class="action-button" (click)="book()">NEXT</button>
         </div>
@@ -137,15 +190,15 @@
           </ion-radio-group>
         </div>
 
-
+    
         <div class="action" *ngIf="paybutton">
           <button class="action-button" (click)="pay()">BOOK</button>
         </div>
 
       </form>
-      <div class="card-info">
+      <!-- <div class="card-info">
         <p> <a href="#">Terms and Conditions</a></p>
-      </div>
+      </div> -->
     </div>
   </div>
    

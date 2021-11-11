@@ -27,6 +27,12 @@
        
               <ion-col>
                 <ion-card-title>Doctor/Clinic: {{data.name}}</ion-card-title>
+                <div *ngIf="data.bookingstatus!=''">
+                  <ion-card-title style="color:green">Status: {{data.bookingstatus}}</ion-card-title>
+                </div>
+                <div *ngIf="data.bookingstatus==''">
+                  <ion-card-title style="color: darkgrey;">Status: Pending</ion-card-title>
+                </div>
                 <ion-card-subtitle class="classgap">Address: {{data.booking_address}}</ion-card-subtitle>
                 <ion-card-subtitle class="classgap">Date: {{data.bokkingdatetime}}</ion-card-subtitle>
                 <ion-card-subtitle class="classgap">Slot: {{data.slot}}</ion-card-subtitle>
