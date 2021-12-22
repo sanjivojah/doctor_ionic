@@ -29,15 +29,15 @@
           </ion-text>
           <ion-text color="medium"><small>{{video.dtCreated | date : 'mediumDate'}}</small></ion-text>
         </ion-label>
-        <ion-icon slot="end" (click)="addTopicToList()" ios="md-bookmark" md="md-bookmark"></ion-icon>
+        <ion-icon slot="end"  ios="md-bookmark" md="md-bookmark"></ion-icon>
       </ion-item>
       <div class="video__actions" [class.reaction-not-allowed]="ownPost">
         <div class="react">
-          <button (click)="likeVideo(true)" [disabled]="ownPost">
+          <button  [disabled]="ownPost">
             <ion-icon ios="md-thumbs-up" md="md-thumbs-up"></ion-icon>
             <span>{{video.stats.liked}}</span>
           </button>
-          <button (click)="likeVideo(false)" [disabled]="ownPost">
+          <button  [disabled]="ownPost">
             <ion-icon ios="md-thumbs-down" md="md-thumbs-down"></ion-icon>
             <span>{{video.stats.disliked}}</span>
           </button>
@@ -93,7 +93,7 @@
               [disabled]="commented"></ion-textarea>
           </div>
           <div class="sbtn" [class.d-none]="input.value?.length === 0 || commented">
-            <button (click)="postComment(input.value)" [disabled]="input.value?.length === 0 || commented">
+            <button  [disabled]="input.value?.length === 0 || commented">
               <ion-icon md="md-send" ios="ios-send"></ion-icon>
             </button>
           </div>

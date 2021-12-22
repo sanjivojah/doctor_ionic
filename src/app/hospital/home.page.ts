@@ -97,7 +97,8 @@ export class HomePage implements OnInit {
             rating:json[i].rating,
             count:Number(json[i].maxlimit),
             status:json[i].status,
-            id:json[i].id
+            id:json[i].id,
+            image:"https://cureplus.online/APIs/upload/"+json[i].image
           })
         }
       });
@@ -126,7 +127,8 @@ export class HomePage implements OnInit {
             rating:json[i].rating,
             count:Number(json[i].maxlimit),
             status:json[i].status,
-            id:json[i].id
+            id:json[i].id,
+            image:"https://cureplus.online/APIs/upload/"+json[i].image
           })
         }
       });
@@ -1210,7 +1212,8 @@ export class HomePage implements OnInit {
             rating:json[i].rating,
             count:Number(json[i].maxlimit),
             status:json[i].status,
-            id:json[i].id
+            id:json[i].id,
+            image:"https://cureplus.online/APIs/upload/"+json[i].image
           })
         }
       })

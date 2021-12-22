@@ -31,7 +31,9 @@ export class HomePage implements OnInit {
   row_data=[]
   type:any
   headername:any
-
+  image:any
+  dataLoading=false
+  dataLoaded=false
 
   constructor(
     private title: Title,
@@ -85,6 +87,7 @@ export class HomePage implements OnInit {
         this.email=json[0].email
         this.contact=json[0].phone
         this.address=json[0].address
+        this.image= "https://cureplus.online/APIs/upload/"+json[0].image
         var language=json[0].language
         var jsonss=language.split(",");
         for(var i=0; i<jsonss.length;i++){
@@ -109,6 +112,8 @@ export class HomePage implements OnInit {
       .subscribe(res => {
         this.row_data=[]
         this.zone.run(() => {
+          this.dataLoaded=true
+
           var json=JSON.parse(JSON.stringify(res))
           this.name=json[0].name
           this.registration=json[0].registration
@@ -118,6 +123,7 @@ export class HomePage implements OnInit {
           this.contact=json[0].phone
           this.address=json[0].address
           var language=json[0].language
+          this.image= "https://cureplus.online/APIs/upload/"+json[0].image
           var jsonss=language.split(",");
           for(var i=0; i<jsonss.length;i++){
             this.row_data.push({
@@ -152,6 +158,7 @@ export class HomePage implements OnInit {
           this.email=json[0].email
           this.contact=json[0].phone
           this.address=json[0].address
+          this.image= "https://cureplus.online/APIs/upload/"+json[0].image
           var language=json[0].language
           var jsonss=language.split(",");
           for(var i=0; i<jsonss.length;i++){

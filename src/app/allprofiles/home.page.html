@@ -13,16 +13,16 @@
     </ion-buttons>
   </ion-toolbar>
   <div class="page__user-profile">
-    <app-profile-skeleton *ngIf="dataLoading; else dataLoaded"></app-profile-skeleton>
+    <app-profile-skeleton  *ngIf="dataLoading; else dataLoaded"></app-profile-skeleton>
     <ng-template #dataLoaded>
       <div class="profile-header" [class.show-stats]="0">
         <div class="header-fill">
-          <img src="https://cureplus.online/app/images/dcenter/diagcenter.png" alt="">
+          <img src="{{image}}" alt="">
         </div>
         <div class="cover">
   
           <div class="avatar">
-            <img src="https://cureplus.online/app/images/dcenter/diagcenter.png" alt="">
+            <img src="{{image}}" alt="">
           </div>
           <div class="nameplate">
             <h3>{{name}}</h3>

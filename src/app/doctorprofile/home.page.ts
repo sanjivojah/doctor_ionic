@@ -29,7 +29,9 @@ export class HomePage implements OnInit {
   email:any
   contact:any
   row_data=[]
-
+  image:any
+  dataLoading=false
+  dataLoaded=false
 
   constructor(
     private title: Title,
@@ -53,7 +55,7 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.store.get('DARK_UI').then((mode) => this.darkMode = mode ? true : false);
-    this.store.get('BANN_PRIVACY').then((show) => this.showPrivacyBanner = show !== 'N' ? true : false);
+ 
     this.id = this.activeRoute.snapshot.paramMap.get('id')
     this.loadData(this.id);
   }
@@ -69,8 +71,10 @@ export class HomePage implements OnInit {
       })
     )
     .subscribe(res => {
+      console.log(res)
       this.row_data=[]
       this.zone.run(() => {
+        this.dataLoaded=true
         var json=JSON.parse(JSON.stringify(res))
         this.name=json[0].name
         this.registration=json[0].registration
@@ -79,6 +83,7 @@ export class HomePage implements OnInit {
         this.email=json[0].email
         this.contact=json[0].phone
         this.address=json[0].address
+        this.image= "https://cureplus.online/APIs/upload/"+json[0].image
         var language=json[0].language
         var jsonss=language.split(",");
         for(var i=0; i<jsonss.length;i++){

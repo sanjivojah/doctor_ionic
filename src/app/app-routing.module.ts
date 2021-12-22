@@ -96,6 +96,10 @@ const routes: Routes = [
     loadChildren: './offer/home.module#HomePageModule'
   },
   {
+    path: 'ht',
+    loadChildren: './ht/home.module#HomePageModule'
+  },
+  {
     path: 'doctorprofile/:id/:time',
     loadChildren: './doctorprofile/home.module#HomePageModule'
   },

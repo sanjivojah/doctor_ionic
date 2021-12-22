@@ -99,6 +99,7 @@ export class HomePage implements OnInit {
             id:json[i].id,
             count:Number(json[i].maxlimit),
             status:json[i].status,
+            image:"https://cureplus.online/APIs/upload/"+json[i].image
           })
         }
       });

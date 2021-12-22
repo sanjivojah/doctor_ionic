@@ -43,6 +43,7 @@ export class HomePage implements OnInit {
   currencyIcon: string = '$';
   razor_key = 'rzp_test_wXHUa0bd5doUNv';
   cardDetails: any = {};
+  others=false
 
   
   constructor(
@@ -369,7 +370,13 @@ export class HomePage implements OnInit {
       var phone = ((document.getElementById("phone") as HTMLInputElement).value);
       var address = ((document.getElementById("address") as HTMLInputElement).value);
       var bloodgroup = ((document.getElementById("bloodgroup") as HTMLInputElement).value);
-      var slot = ((document.getElementById("slot") as HTMLInputElement).value);
+      if(this.others){
+        var slot = ((document.getElementById("otherslot") as HTMLInputElement).value);
+        
+      }
+      else{
+        var slot = ((document.getElementById("slot") as HTMLInputElement).value);
+      }
       //***********/
       var bookingdate = ((document.getElementById("bookingdate") as HTMLInputElement).value);
       var modes = ((document.getElementById("mode") as HTMLInputElement).value);
@@ -448,7 +455,14 @@ export class HomePage implements OnInit {
       var phone = ((document.getElementById("phone") as HTMLInputElement).value);
       var address = ((document.getElementById("address") as HTMLInputElement).value);
       var bloodgroup = ((document.getElementById("bloodgroup") as HTMLInputElement).value);
-      var slot = ((document.getElementById("slot") as HTMLInputElement).value);
+      if(this.others){
+        var slot = ((document.getElementById("otherslot") as HTMLInputElement).value);
+        
+      }
+      else{
+        var slot = ((document.getElementById("slot") as HTMLInputElement).value);
+      }
+     
       //var newDate = new Date();
       var datee = new Date().toLocaleDateString();
       const formData = new FormData();
@@ -521,7 +535,13 @@ export class HomePage implements OnInit {
       return false
     }
   }
-
+  checktest(){
+    //alert('HI')
+    this.others=true
+  }
+  checktest1(){
+    this.others=false
+  }
  
 
 }

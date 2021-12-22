@@ -27,18 +27,7 @@
             <ion-row>
               <ion-avatar>
                 <ion-col>
-                  <div *ngIf='data.type=="Hospital"'>
-                    <img src="https://cureplus.online/app/images/hospital/hospital.png">
-                  </div>
-                  <div *ngIf='data.type=="Doctor"'>
-                    <img src="https://st2.depositphotos.com/4226061/9064/v/950/depositphotos_90647730-stock-illustration-female-doctor-avatar-icon.jpg">
-                  </div>
-                  <div *ngIf='data.type=="Clinic"'>
-                    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-                  </div>
-                  <div *ngIf='data.type=="Diagnostic"'>
-                    <img src="https://cureplus.online/app/images/dcenter/dcenter.png">
-                  </div>
+                  <img src="{{data.image}}">
                 </ion-col>
               </ion-avatar>
               <ion-col>
