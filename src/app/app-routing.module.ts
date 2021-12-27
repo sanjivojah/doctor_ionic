@@ -100,6 +100,26 @@ const routes: Routes = [
     loadChildren: './ht/home.module#HomePageModule'
   },
   {
+    path: 'ht_details/:id',
+    loadChildren: './ht_details/home.module#HomePageModule'
+  },
+  {
+    path: 'per_blog',
+    loadChildren: './per_blog/home.module#HomePageModule'
+  },
+  {
+    path: 'blog/:id',
+    loadChildren: './blog/home.module#HomePageModule'
+  },
+  {
+    path: 'blog1/:id',
+    loadChildren: './blog1/home.module#HomePageModule'
+  },
+  {
+    path: 'blogs/:id',
+    loadChildren: './blogs/home.module#HomePageModule'
+  },
+  {
     path: 'doctorprofile/:id/:time',
     loadChildren: './doctorprofile/home.module#HomePageModule'
   },

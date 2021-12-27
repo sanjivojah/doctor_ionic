@@ -1,7 +1,7 @@
 import { Component, OnInit,NgZone } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ModalController, NavController, ToastController } from '@ionic/angular';
-import { Router, NavigationStart, Event } from '@angular/router';
+import { Router, NavigationStart, Event,ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { finalize } from 'rxjs/operators';
 import { InteractionService } from '../_services/interaction.service';
@@ -22,6 +22,7 @@ export class HomePage implements OnInit {
   datess=[]
   row_data = []
   offlinedata = []
+  id:any
 
   constructor(
     private title: Title,
@@ -34,26 +35,12 @@ export class HomePage implements OnInit {
     private homeData: HomeDataService,
     private http: HttpClient,
     private zone:NgZone,
-    private location:Location
+    private location:Location,
+    private activeRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    var someDate = new Date();
-    var dd = someDate.getDate();
-    var mm = someDate.getMonth();
-    var y = someDate.getFullYear();
-    var someFormattedDate = dd + '-'+ mm + '-'+ y;
-    this.datess.push(someFormattedDate)
-    var dd1 = someDate.getDate()+1;
-    var mm1 = someDate.getMonth();
-    var y1 = someDate.getFullYear();
-    var someFormattedDat1 = dd1 + '-'+ mm1 + '-'+ y1;
-    this.datess.push(someFormattedDat1)
-    var dd2 = someDate.getDate()+2;
-    var mm2 = someDate.getMonth();
-    var y2 = someDate.getFullYear();
-    var someFormattedDate2 = dd2 + '-'+ mm2 + '-'+ y2;
-    this.datess.push(someFormattedDate2)
+    this.id = this.activeRoute.snapshot.paramMap.get('id')
     this.getdata()
     //this.getofflinedata()
     this.title.setTitle('Doctor Dashboard');
@@ -71,21 +58,20 @@ export class HomePage implements OnInit {
 
 
   getdata(){
+    alert('s')
     const formData = new FormData();
     formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
-    this.http.post("https://cureplus.online/APIs/allht.php", formData)
+    formData.append('id', this.id)
+    this.http.post("https://cureplus.online/APIs/blog.php", formData)
     .pipe(
       finalize(() => {
       })
     )
     .subscribe(res => {
       this.row_data=[]
-      var l=0
       this.zone.run(() => {
         var json=JSON.parse(JSON.stringify(res))
         for(var i=0; i<json.length;i++){
-          l++
-          console.log(json[0])
           this.row_data.push({
             date:json[i].date,
             tips:json[i].tips,
@@ -171,9 +157,15 @@ export class HomePage implements OnInit {
     this.hideBanner();
     this.nav.navigateForward('/account/my-profile');
   }
-  view_full(id){
-       this.router.navigateByUrl('/ht_details/'+id);
+  view_full(id,actualid){
+    var dates = ((document.getElementById(actualid) as HTMLInputElement).value);
    
+    if(dates){
+       this.router.navigateByUrl('/doctorprofile/'+id+'/'+dates);
+    }
+    else{
+      this.presentToast('Please Select a Date for appointment')
+    }
   }
 
   // dismissReminder() {

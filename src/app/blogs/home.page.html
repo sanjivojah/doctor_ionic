@@ -5,7 +5,7 @@
         <ion-icon ios="md-arrow-back" md="md-arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title color="dark" text-center>Health Tips</ion-title>
+    <ion-title color="dark" text-center>Health Blogs</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -23,25 +23,19 @@
     <p style="text-align: center;
     color: red;">No data Available</p>
   </div>
-  <div *ngFor='let data of row_data' (click)="view_full(data.id)">
+  <div *ngFor='let data of row_data'>
     <ion-card>
+      <ion-card-header>
+        <ion-card-title> {{data.title}}</ion-card-title>
+      </ion-card-header>
       <img src="{{data.image}}" style="height: 150px;"/>
       <ion-card-header>
         <ion-card-subtitle>{{data.date}}</ion-card-subtitle>
-        <ion-card-title>{{data.title}}</ion-card-title>
+        <ion-card-title>Author: {{data.author}}</ion-card-title>
+        <ion-card-subtitle>Source: {{data.source}}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        <div class="text">
-         
-        </div>
-        <ion-row>
-          <ion-col size="7" >
-        
-          </ion-col>
-          <ion-col size="5">
-              <ion-button color="success" (click)='view_full(data.id)'>Read more</ion-button>
-          </ion-col>
-        </ion-row>
+       {{data.content}}
       </ion-card-content>
     </ion-card>
   </div>

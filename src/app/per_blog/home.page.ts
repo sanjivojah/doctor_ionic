@@ -73,25 +73,21 @@ export class HomePage implements OnInit {
   getdata(){
     const formData = new FormData();
     formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
-    this.http.post("https://cureplus.online/APIs/allht.php", formData)
+    this.http.post("https://cureplus.online/APIs/pre_blog.php", formData)
     .pipe(
       finalize(() => {
       })
     )
     .subscribe(res => {
+      console.log(res)
       this.row_data=[]
       var l=0
       this.zone.run(() => {
         var json=JSON.parse(JSON.stringify(res))
         for(var i=0; i<json.length;i++){
-          l++
-          console.log(json[0])
           this.row_data.push({
-            date:json[i].date,
-            tips:json[i].tips,
-            title:json[i].title,
+            category:json[i].category,
             id:json[i].id,
-            image:"https://cureplus.online/APIs/upload/healthtips/"+json[i].image
           })
         }
       });
@@ -172,7 +168,7 @@ export class HomePage implements OnInit {
     this.nav.navigateForward('/account/my-profile');
   }
   view_full(id){
-       this.router.navigateByUrl('/ht_details/'+id);
+       this.router.navigateByUrl('/blog1/'+id);
    
   }
 
