@@ -8,6 +8,7 @@ import { InteractionService } from '../_services/interaction.service';
 import { HomeDataService } from './home-data.service';
 import { HttpClient } from '@angular/common/http';
 import { Location } from "@angular/common";
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -22,6 +23,7 @@ export class HomePage implements OnInit {
   datess=[]
   row_data = []
   offlinedata = []
+  isOrange=false
 
   constructor(
     private title: Title,
@@ -34,7 +36,8 @@ export class HomePage implements OnInit {
     private homeData: HomeDataService,
     private http: HttpClient,
     private zone:NgZone,
-    private location:Location
+    private location:Location,
+    private socialSharing: SocialSharing,
   ) { }
 
   ngOnInit() {
@@ -69,11 +72,56 @@ export class HomePage implements OnInit {
     this.store.get('BANN_PRIVACY').then((show) => this.showPrivacyBanner = show !== 'N' ? true : false);
   }
 
+  toggle(){
+    if(this.isOrange) {
+      this.presentToast('Sort by Name A to Z')
+      this.getdata()
+     
+    }else {
+      this.presentToast('Sort by Name Z to A')
+       this.getdatadesc()
+       
+    }
+    this.isOrange = !this.isOrange;
+  }
 
   getdata(){
     const formData = new FormData();
     formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
     this.http.post("https://cureplus.online/APIs/alldoctor.php", formData)
+    .pipe(
+      finalize(() => {
+      })
+    )
+    .subscribe(res => {
+      this.row_data=[]
+      var l=0
+      this.zone.run(() => {
+        var json=JSON.parse(JSON.stringify(res))
+        for(var i=0; i<json.length;i++){
+          l++
+          console.log(json[0])
+          this.row_data.push({
+            dataid: 'dates'+l,
+            name: json[i].name,
+            category:json[i].category,
+            address:json[i].address,
+            rating:json[i].rating,
+            sex:json[i].sex,
+            count:Number(json[i].maxlimit),
+            status:json[i].status,
+            id:json[i].id,
+            image:"https://cureplus.online/APIs/upload/"+json[i].image
+          })
+        }
+      });
+  
+    });
+  }
+  getdatadesc(){
+    const formData = new FormData();
+    formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+    this.http.post("https://cureplus.online/APIs/alldoctordsc.php", formData)
     .pipe(
       finalize(() => {
       })
@@ -177,14 +225,14 @@ export class HomePage implements OnInit {
     this.nav.navigateForward('/account/my-profile');
   }
   view_full(id,actualid){
-    var dates = ((document.getElementById(actualid) as HTMLInputElement).value);
+    // var dates = ((document.getElementById(actualid) as HTMLInputElement).value);
    
-    if(dates){
-       this.router.navigateByUrl('/doctorprofile/'+id+'/'+dates);
-    }
-    else{
-      this.presentToast('Please Select a Date for appointment')
-    }
+    // if(dates){
+       this.router.navigateByUrl('/doctorprofile/'+id+'/'+0);
+    // }
+    // else{
+    //   this.presentToast('Please Select a Date for appointment')
+    // }
   }
 
   // dismissReminder() {
@@ -192,6 +240,15 @@ export class HomePage implements OnInit {
   // }
   goBack(){
     this.location.back();
+  }
+  share(){
+    var imgurl= 'https://cureplus.online/app/images/home/1_banner.jpg'
+    var strings='https://play.google.com/store/apps/details?id=cureplus.projectnothing.xyz'
+    this.socialSharing.share('Medical consultation doctor and diagnostic appointment. Blogs, health tips from reliable sources. Please download the app from below link',null,imgurl,strings)
+    .then(() => {},
+      () => { 
+        alert('SocialSharing failed');
+      });
   }
 
 }

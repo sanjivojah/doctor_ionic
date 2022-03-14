@@ -117,4 +117,7 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
+  forgot(){
+    this.nav.navigateForward('/forgotpass');
+  }
 }

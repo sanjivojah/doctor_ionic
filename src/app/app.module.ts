@@ -20,6 +20,7 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
     Geolocation,
     AndroidPermissions,
     LocationAccuracy,
+    SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

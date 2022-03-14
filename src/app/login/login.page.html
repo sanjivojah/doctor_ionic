@@ -25,6 +25,9 @@
                 <mat-error *ngIf="loginForm.controls['pw'].errors">{{getErrorMessage('pass')}}</mat-error>
               </mat-form-field>
             </div>
+            <div class="input-row" (click)="forgot()">
+             <p style="color:blue">Click here to Reset Password with Email</p>
+            </div>
             <div class="input-row">
               <button class="btn__signin loading-btn" [class.loading]="formSubmitted" type="submit"
                 [disabled]="!loginForm.valid || formSubmitted">{{loginBtnText}}</button>

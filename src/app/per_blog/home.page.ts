@@ -86,8 +86,9 @@ export class HomePage implements OnInit {
         var json=JSON.parse(JSON.stringify(res))
         for(var i=0; i<json.length;i++){
           this.row_data.push({
-            category:json[i].category,
+            category:json[i].name,
             id:json[i].id,
+            image:'https://cureplus.online/APIs/upload/blogicon/'+json[i].image,
           })
         }
       });

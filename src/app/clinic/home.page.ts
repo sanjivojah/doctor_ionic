@@ -23,6 +23,7 @@ export class HomePage implements OnInit {
   row_data = []
   datess=[]
   offlinedata=[]
+  isOrange=false
   constructor(
     private title: Title,
     private interact: InteractionService,
@@ -100,6 +101,19 @@ export class HomePage implements OnInit {
   
     });
   }
+  toggle(){
+    if(this.isOrange) {
+      this.presentToast('Sort by Name A to Z')
+      this.getdata()
+     
+    }else {
+      this.presentToast('Sort by Name Z to A')
+       this.getdatadesc()
+       
+    }
+    this.isOrange = !this.isOrange;
+  }
+
 
   getdata(){
     const formData = new FormData();
@@ -133,6 +147,40 @@ export class HomePage implements OnInit {
   
     });
   }
+
+  getdatadesc(){
+    const formData = new FormData();
+    formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+    this.http.post("https://cureplus.online/APIs/allclinicdsc.php", formData)
+    .pipe(
+      finalize(() => {
+      })
+    )
+    .subscribe(res => {
+      this.row_data=[]
+      var l=0
+      this.zone.run(() => {
+        var json=JSON.parse(JSON.stringify(res))
+        for(var i=0; i<json.length;i++){
+          l++
+          //console.log(json[0])
+          this.row_data.push({
+            dataid: 'dates'+l,
+            name: json[i].name,
+            category:json[i].category,
+            address:json[i].address,
+            rating:json[i].rating,
+            count:Number(json[i].maxlimit),
+            status:json[i].status,
+            id:json[i].id,
+            image:"https://cureplus.online/APIs/upload/"+json[i].image
+          })
+        }
+      });
+  
+    });
+  }
+
 
  
 

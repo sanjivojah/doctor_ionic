@@ -21,7 +21,7 @@
   </section>
   <div *ngIf="row_data?.length == 0">
     <p style="text-align: center;
-    color: red;">No data Available</p>
+    color: red;">No Internet</p>
   </div>
   <div *ngFor='let data of row_data'>
     <ion-card>
@@ -30,12 +30,25 @@
       </ion-card-header>
       <img src="{{data.image}}" style="height: 150px;"/>
       <ion-card-header>
-        <ion-card-subtitle style="color: black;">{{data.date}}</ion-card-subtitle>
+        <ion-row>
+          <ion-col size="10" >
+            <ion-card-subtitle style="color: black;">{{data.date}}</ion-card-subtitle>
+          </ion-col>
+          <ion-col size="2" (click)="share()">
+            <div class="shrebtn">
+              <img src="../../assets/icon/share.png">
+            </div>
+          </ion-col>
+        </ion-row>
         <ion-card-subtitle style="color: black;"> {{data.author}}</ion-card-subtitle>
         <ion-card-subtitle style="color: black;">{{data.source}}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content style="color: black;">
-       {{data.content}}
+       <ion-textarea style="text-align: justify;">
+        {{data.content}}
+       </ion-textarea>
+
+       
       </ion-card-content>
     </ion-card>
   </div>

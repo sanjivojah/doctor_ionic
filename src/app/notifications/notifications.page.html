@@ -21,10 +21,10 @@
     <div class="no-notif"></div>
   </div>
   <div class="content content__loaded" *ngIf="!dataLoading && !noNotif">
-      <div class="list" *ngIf="otherNotifications.length > 0; else noOthNotif">
+      <div class="list" *ngIf="row_data.length > 0; else noOthNotif">
           <!-- <div class="list-header">Earlier</div> -->
           <ion-list class="list-wrapper">
-            <ion-item-sliding *ngFor="let notif of otherNotifications">
+            <ion-item-sliding *ngFor="let notif of row_data">
               <ion-item lines="full" [class.deleted]="deletedON.includes(notif.id)">
                 <ion-avatar slot="start">
                   <img src="assets/images/avatar.jpg" alt="...">
@@ -32,7 +32,7 @@
                 <ion-label text-wrap>
                     <h2>{{notif.title}}</h2>
                     <p>{{notif.description}}</p>
-                    <small>{{today}}</small>
+                    <small>{{notif.time}}</small>
                   </ion-label>
                 </ion-item>
               <ion-item-options side="end">

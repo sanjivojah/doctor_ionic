@@ -23,6 +23,7 @@ export class HomePage implements OnInit {
   row_data = []
   offlinedata=[]
   alert:any
+  isOrange=false
   constructor(
     private title: Title,
     private interact: InteractionService,
@@ -70,12 +71,57 @@ export class HomePage implements OnInit {
     this.store.get('BANN_PRIVACY').then((show) => this.showPrivacyBanner = show !== 'N' ? true : false);
   }
 
+  toggle(){
+    if(this.isOrange) {
+      this.presentToast('Sort by Name A to Z')
+      this.getdata()
+     
+    }else {
+      this.presentToast('Sort by Name Z to A')
+       this.getdatadesc()
+       
+    }
+    this.isOrange = !this.isOrange;
+  }
 
   getdata(){
     this.getofflinedata()
     const formData = new FormData();
     formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
     this.http.post("https://cureplus.online/APIs/alldiag.php", formData)
+    .pipe(
+      finalize(() => {
+      })
+    )
+    .subscribe(res => {
+      var l=0
+      this.row_data=[]
+      this.zone.run(() => {
+        var json=JSON.parse(JSON.stringify(res))
+        for(var i=0; i<json.length;i++){
+          l++
+          //console.log(json[0])
+          this.row_data.push({
+            dataid: 'dates'+l,
+            name: json[i].name,
+            category:json[i].category,
+            address:json[i].address,
+            rating:json[i].rating,
+            count:Number(json[i].maxlimit),
+            status:json[i].status,
+            id:json[i].id,
+            image:"https://cureplus.online/APIs/upload/"+json[i].image
+          })
+        }
+      });
+  
+    });
+  }
+  getdatadesc(){
+    this.getofflinedata()
+    const formData = new FormData();
+    formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+    this.http.post("https://cureplus.online/APIs/alldiagdsc.php", formData)
     .pipe(
       finalize(() => {
       })
@@ -175,14 +221,14 @@ export class HomePage implements OnInit {
     this.nav.navigateForward('/account/my-profile');
   }
   view_full(id,actualid){
-    var dates = ((document.getElementById(actualid) as HTMLInputElement).value);
+    // var dates = ((document.getElementById(actualid) as HTMLInputElement).value);
    
-    if(dates){
-      this.router.navigateByUrl('/allprofiles/'+id+'/diag/'+dates);
-    }
-    else{
-      this.presentToast('Please Select a Date for appointment')
-    }
+    // if(dates){
+      this.router.navigateByUrl('/allprofiles/'+id+'/diag/'+0);
+    // }
+    // else{
+    //   this.presentToast('Please Select a Date for appointment')
+    // }
   }
   goBack(){
     this.location.back();

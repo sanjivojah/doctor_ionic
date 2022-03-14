@@ -61,6 +61,7 @@
               <ion-select-option value="0-">0-</ion-select-option>
               <ion-select-option value="AB+">AB+</ion-select-option>
               <ion-select-option value="AB-">AB-</ion-select-option>
+                <ion-select-option value="Not Sure">Not Sure</ion-select-option>
             </ion-select>
           </ion-item>
           <!-- <ion-radio-group id="bloodgroup">
@@ -104,7 +105,12 @@
         </div> -->
 
         <div class="input">
-          <input style="opacity: 0.6;" type="text" class="input-field"  id="bookingdate" value="{{bookingtime}}" disabled/>
+    
+
+          <ion-item>
+            <ion-label>Please select date of appointment</ion-label>
+            <ion-datetime displayFormat="DD-MMM-YY HH:mm"  id="bookingdate"></ion-datetime>
+          </ion-item>
           <label class="input-label1">Booking Date</label>
         </div>
       

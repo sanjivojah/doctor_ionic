@@ -6,6 +6,11 @@
       </ion-button>
     </ion-buttons>
     <ion-title color="dark" text-center>Doctor Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="dark" (click)="toggle()">
+        <ion-icon ios="md-funnel" md="md-funnel"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -21,7 +26,7 @@
   </section>
   <div *ngIf="row_data?.length == 0">
     <p style="text-align: center;
-    color: red;">No data Available</p>
+    color: red;">No Internet</p>
   </div>
   <div *ngFor='let data of row_data'>
       <ion-card>
@@ -49,15 +54,10 @@
         </ion-card-content> -->
         <ion-card-content style="text-align: right;">
           <ion-row>
-            <ion-col size="7" >
-              <ion-item *ngIf='data.count!=0 && data.status!="no"'>
-                <ion-label>Select</ion-label>
-                <ion-select id="{{data.dataid}}">
-                  <div *ngFor='let dates of datess'>
-                    <ion-select-option value="{{dates}}">{{dates}}</ion-select-option>
-                  </div>
-                </ion-select>
-              </ion-item>
+            <ion-col size="7" (click)="share()">
+              <div class="shrebtn">
+                <img src="../../assets/icon/share.png">
+              </div>
             </ion-col>
             <ion-col size="5">
               <div *ngIf='data.count==0 '>
@@ -77,7 +77,7 @@
   </div>
   <div *ngIf="offlinedata?.length == 0">
     <p style="text-align: center;
-    color: red;">No data Available</p>
+    color: red;">No Internet</p>
   </div>
   <div *ngFor='let data of offlinedata'>
     <ion-card style="opacity: 0.6;">

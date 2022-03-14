@@ -8,6 +8,7 @@ import { InteractionService } from '../_services/interaction.service';
 import { HomeDataService } from './home-data.service';
 import { HttpClient } from '@angular/common/http';
 import { Location } from "@angular/common";
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -34,7 +35,8 @@ export class HomePage implements OnInit {
     private homeData: HomeDataService,
     private http: HttpClient,
     private zone:NgZone,
-    private location:Location
+    private location:Location,
+    private socialSharing: SocialSharing,
   ) { }
 
   ngOnInit() {
@@ -181,6 +183,15 @@ export class HomePage implements OnInit {
   // }
   goBack(){
     this.location.back();
+  }
+  share(){
+    var imgurl= 'https://cureplus.online/app/images/home/1_banner.jpg'
+    var strings='https://play.google.com/store/apps/details?id=cureplus.projectnothing.xyz'
+    this.socialSharing.share('Medical consultation doctor and diagnostic appointment. Blogs, health tips from reliable sources. Please download the app from below link',null,imgurl,strings)
+    .then(() => {},
+      () => { 
+        alert('SocialSharing failed');
+      });
   }
 
 }

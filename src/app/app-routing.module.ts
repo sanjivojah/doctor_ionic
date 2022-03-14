@@ -123,6 +123,10 @@ const routes: Routes = [
     path: 'doctorprofile/:id/:time',
     loadChildren: './doctorprofile/home.module#HomePageModule'
   },
+  {
+    path: 'forgotpass',
+    loadChildren: './forgotpass/login.module#LoginPageModule'
+  },
   { 
     path: '**', 
     loadChildren: './error/error.module#ErrorPageModule' 
