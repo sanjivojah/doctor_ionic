@@ -28,6 +28,7 @@ export class HomePage implements OnInit {
   patients: any[] = [];
   deals: any[] = [];
   row_data=[]
+  row_data1=[]
   dealLoaded = false;
 
   darkMode: boolean;
@@ -94,6 +95,7 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getbanners()
     this.title.setTitle('Doctor Dashboard');
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
@@ -119,6 +121,32 @@ export class HomePage implements OnInit {
       this.dealLoaded = true;
     }, 2000);
   }
+
+  getbanners(){
+    const formData = new FormData();
+    formData.append('token', 'ZXYlmPt6OpAmaLFfjkdjldfjdlM')
+    this.http.post("https://cureplus.online/APIs/homeImage.php", formData)
+    .pipe(
+      finalize(() => {
+      })
+    )
+    .subscribe(res => {
+      console.log(res)
+      this.row_data1=[]
+      this.zone.run(() => {
+        var json=JSON.parse(JSON.stringify(res))
+        for(var i=0; i<json.length;i++){
+          this.row_data1.push({
+            image:'https://cureplus.online/app/images/home/'+json[i].image
+          })
+        }
+      });
+  
+    });
+  }
+
+
+
 
   async initSearch() {
     const modal = await this.modal.create({

@@ -224,14 +224,15 @@ export class HomePage implements OnInit {
     this.nav.navigateForward('/account/my-profile');
   }
   view_full(id,actualid){
-    var dates = ((document.getElementById(actualid) as HTMLInputElement).value);
+    this.router.navigateByUrl('/allprofiles/'+id+'/clinic/'+0);
+    // var dates = ((document.getElementById(actualid) as HTMLInputElement).value);
    
-    if(dates){
-      this.router.navigateByUrl('/allprofiles/'+id+'/clinic/'+dates);
-    }
-    else{
-      this.presentToast('Please Select a Date for appointment')
-    }
+    // if(dates){
+    //   this.router.navigateByUrl('/allprofiles/'+id+'/clinic/'+dates);
+    // }
+    // else{
+    //   this.presentToast('Please Select a Date for appointment')
+    // }
     
   }
   goBack(){

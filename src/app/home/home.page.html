@@ -21,34 +21,17 @@
   </section>
   <section>
     <ion-slides class="slides__dashboard featured mt-0 full-width" [options]="slideOpts" pager="true">
-      <ion-slide>
+      <!-- <div>
+      </div> -->
+      <ion-slide *ngFor='let data of row_data1'>
         <div class="slides__featured">
-          <div class="banner" style="background-image: url('https://cureplus.online/app/images/home/1_banner.jpg')">
+          <div class="banner" >
+            <img class="baal-bimal" src='{{data.image}}'/>
             <div class="main-text"></div>
           </div>
         </div>
       </ion-slide>
-      <ion-slide>
-        <div class="slides__featured">
-          <div class="banner" style="background-image: url('https://cureplus.online/app/images/home/2_banner.jpg')">
-            <div class="main-text"></div>
-          </div>
-        </div>
-      </ion-slide>
-      <ion-slide>
-        <div class="slides__featured">
-          <div class="banner" style="background-image: url('https://cureplus.online/app/images/home/3_banner.jpg')">
-            <div class="main-text"></div>
-          </div>
-        </div>
-      </ion-slide>
-      <ion-slide>
-        <div class="slides__featured">
-          <div class="banner" style="background-image: url('https://cureplus.online/app/images/home/4_banner.jpg')">
-            <div class="main-text"></div>
-          </div>
-        </div>
-      </ion-slide>
+  
     </ion-slides>
   </section>
   <!-- Social -->

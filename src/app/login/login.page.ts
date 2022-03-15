@@ -35,10 +35,14 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    this.loginBtnText = 'Sign in';
+    this.formSubmitted = false;
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
   }
 
   ionViewDidEnter() {
+    this.loginBtnText = 'Sign in';
+    this.formSubmitted = false;
     this.title.setTitle('Sign in');
   }
 

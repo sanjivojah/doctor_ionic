@@ -62,6 +62,7 @@ export class HomePage implements OnInit {
       })
     )
     .subscribe(res => {
+      console.log(res)
       this.row_data=[]
       this.zone.run(() => {
         var json=JSON.parse(JSON.stringify(res))
@@ -71,7 +72,8 @@ export class HomePage implements OnInit {
             offertitle: json[i].details,
             code:json[i].code,
             type:json[i].type,
-            id:json[i].id
+            id:json[i].id,
+            image:'https://cureplus.online/APIs/upload/offerphoto/'+json[i].image
           })
         }
       });
