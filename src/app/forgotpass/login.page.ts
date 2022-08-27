@@ -119,7 +119,7 @@ export class LoginPage implements OnInit {
                 // this.nav.navigateForward('/home');
           }
           else{
-            this.presentToast('Invalid Login Credentials.');
+            this.presentToast('The Email or Phone Number not registerd with us');
             this.loginBtnText = 'Sign in';
             this.formSubmitted = false;
           }

@@ -2,7 +2,7 @@ ion-content {
   --ion-background-color: var(--bg-color-grey) !important;
 }
 
-ion-list{
+ion-list {
   --ion-background-color: #fff;
 }
 
@@ -13,7 +13,7 @@ ion-item {
 
 ion-list[collapsible] {
   &:not(:last-of-type) {
-    margin-bottom: 0
+    margin-bottom: 0;
   }
 }
 
@@ -49,7 +49,7 @@ ion-list-header {
     overflow: hidden;
     position: absolute;
     background: #3e3e3e;
-    box-shadow: rgba(0, 0, 0, .07) 0 2px 0;
+    box-shadow: rgba(0, 0, 0, 0.07) 0 2px 0;
     bottom: -120px;
     left: -40px;
     right: -80px;
@@ -59,7 +59,7 @@ ion-list-header {
     -ms-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
 
-    >img {
+    > img {
       filter: blur(42px);
       left: 50%;
       margin: -60% 0 0 -52%;
@@ -70,16 +70,20 @@ ion-list-header {
     }
 
     &::after {
-      background: linear-gradient(to bottom, rgba(0, 0, 0, .57) 0, rgba(0, 0, 0, .21) 100%);
-      box-shadow: inset rgba(0, 0, 0, .26) 0 3px 0, inset rgba(0, 0, 0, .21) 2px 0 0, inset rgba(0, 0, 0, .26) 0 -1px 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.57) 0,
+        rgba(0, 0, 0, 0.21) 100%
+      );
+      box-shadow: inset rgba(0, 0, 0, 0.26) 0 3px 0,
+        inset rgba(0, 0, 0, 0.21) 2px 0 0, inset rgba(0, 0, 0, 0.26) 0 -1px 0;
       bottom: 0;
-      content: '';
+      content: "";
       left: 0;
       position: absolute;
       right: 0;
       top: 0;
     }
-
   }
 
   .cover {
@@ -111,10 +115,10 @@ ion-list-header {
       color: #fff;
 
       p {
-        margin-top: 0;
+        margin-top: -2px;
         opacity: 0.75;
+        margin-bottom: 6px;
       }
-
     }
   }
 
@@ -150,7 +154,7 @@ ion-list-header {
     grid-template-columns: 1fr 1fr;
 
     .ceritification {
-      display: none
+      display: none;
     }
   }
 
@@ -158,11 +162,11 @@ ion-list-header {
     grid-template-columns: 1fr 1fr 1fr;
 
     .ceritification {
-      display: block
+      display: block;
     }
   }
 
-  >div {
+  > div {
     text-align: center;
     padding: 10px;
 
@@ -171,7 +175,7 @@ ion-list-header {
     }
 
     strong {
-      color: var(--ion-color-secondary)
+      color: var(--ion-color-secondary);
     }
 
     span {
@@ -185,9 +189,9 @@ ion-list-header {
 
   &.trans {
     background: transparent;
-    // margin-bottom: 0;   
+    // margin-bottom: 0;
 
-    >div {
+    > div {
       border-color: rgba(238, 238, 238, 0.2);
       padding: 0;
 
@@ -260,7 +264,7 @@ ion-list-header {
 
 .address {
   span:not(:empty):not(:last-child)::after {
-    content: ', ';
+    content: ", ";
   }
 }
 
@@ -281,7 +285,7 @@ ion-list-header {
 }
 
 .award-item:not(:last-of-type)::after {
-  content: ', ';
+  content: ", ";
 }
 
 .language-list {
@@ -349,29 +353,34 @@ $avatar-offset: 52+16;
 $line-width: 500px;
 
 @mixin background-gradient {
-  background-image: linear-gradient(120deg, $base-color 0px, $shine-color 40px, $base-color 80px);
-  background-size: 600px
+  background-image: linear-gradient(
+    120deg,
+    $base-color 0px,
+    $shine-color 40px,
+    $base-color 80px
+  );
+  background-size: 600px;
 }
 
 @keyframes shine-lines {
   0% {
-    background-position: -100px
+    background-position: -100px;
   }
 
   40%,
   100% {
-    background-position: $line-width
+    background-position: $line-width;
   }
 }
 
 @keyframes shine-avatar {
   0% {
-    background-position: -100px + $avatar-offset
+    background-position: -100px + $avatar-offset;
   }
 
   40%,
   100% {
-    background-position: $line-width
+    background-position: $line-width;
   }
 }
 
