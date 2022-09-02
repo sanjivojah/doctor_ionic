@@ -7,6 +7,10 @@ const routes: Routes = [
     path: 'welcome',
     loadChildren: './welcome/welcome.module#WelcomePageModule'
   },
+  {
+    path: 'cashfree',
+    loadChildren: './cashfree/welcome.module#WelcomePageModule'
+  },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   {
     path: 'register',
