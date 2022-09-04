@@ -361,7 +361,44 @@ export class HomePage implements OnInit {
       this.presentToast('Please select a payment mode')
     }
     else if(modea=='online'){
-      this.presentToast('Online Payment Mode Not Available')
+    
+        // this.presentToast('Online Payment Mode Not Available')
+        //this.payWithRazor(this.totalamount) 
+        var userid = localStorage.getItem('username')
+        var name = ((document.getElementById("name") as HTMLInputElement).value);
+        var phone = ((document.getElementById("phone") as HTMLInputElement).value);
+        var address = ((document.getElementById("address") as HTMLInputElement).value);
+        var bloodgroup = ((document.getElementById("bloodgroup") as HTMLInputElement).value);
+        if (this.others) {
+          var slot = ((document.getElementById("otherslot") as HTMLInputElement).value);
+  
+        }
+        else {
+          var slot = ((document.getElementById("slot") as HTMLInputElement).value);
+        }
+        var bookingdate = ((document.getElementById("bookingdate") as HTMLInputElement).value);
+        var modes = ((document.getElementById("mode") as HTMLInputElement).value);
+  
+        this.router.navigate(['/cashfree'], {
+          queryParams: {
+            'userid':userid,
+            'name':name,
+            'phone':phone,
+            'address':address,
+            'bloodgroup':bloodgroup,
+            'slot':slot,
+            'datee':datee,
+            'type':this.type,
+            'bookingid':this.bookingid,
+            'amount':this.amount,
+            'offeramount':this.offeramount,
+            'totalamount':this.totalamount,
+            'booking_name':this.booking_name,
+            'booking_address':this.booking_address,
+            'bookingdate':bookingdate,
+            'modes':modes,
+          },
+        });
       //this.payWithRazor(this.totalamount) 
     }
     else{

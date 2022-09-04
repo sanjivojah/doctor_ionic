@@ -116,12 +116,12 @@ export class WelcomePage implements AfterViewInit {
         'Content-Type': 'application/x-www-form-urlencoded'
       };
 
-      this.http.setDataSerializer('json');
-      const response = await this.http.post(url, params, headers);
+      //this.http.setDataSerializer('json');
+     // const response = await this.http.post(url, params, headers);
 
-      map.set('token', JSON.parse(response.data).cftoken);
-      console.log(JSON.stringify(JSON.parse(response.data))); // JSON data returned by server
-      console.log(map.get('token'));
+      //map.set('token', JSON.parse(response.data).cftoken);
+     // console.log(JSON.stringify(JSON.parse(response.data))); // JSON data returned by server
+      //.log(map.get('token'));
       return Promise.resolve(map);
 
     } catch (error) {
